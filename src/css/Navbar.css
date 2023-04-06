@@ -1,0 +1,86 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open-San', sans-serif;
+}
+
+.header-navbar-container{
+    height: 30vh;
+    background-color: white;
+    display: grid;
+    grid-template-rows: auto 60px;
+    align-items: center;
+}
+
+.header-container{
+    background: lightblue;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+#brand-named{
+    font-size: 4rem;
+    text-align: center;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+    font-size: 1.25rem;
+    display: flex;
+}
+
+.signin-container{
+    display: flex;
+    align-items: center;
+}
+
+a:hover{
+    color: orange;
+}
+
+
+header{
+    position: relative;
+    padding: 0 2rem;
+}
+
+.navbar{
+    width: 100%;
+    height: 60px;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;    
+}
+
+.navbar .links{
+    display: flex;
+    gap: 5rem;
+}
+
+.navbar .toggle-btn{
+    font-size: 1rem;
+    cursor: pointer;
+    display: none;
+}
+
+@media(max-width: 992px){
+    .navbar .links,
+    .navbar .action-btn{
+        display: none;
+    }
+
+    .navbar .toggle-btn{
+        display: block;
+    }
+    
+}
