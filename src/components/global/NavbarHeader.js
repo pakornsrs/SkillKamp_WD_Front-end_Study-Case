@@ -18,7 +18,9 @@ const NavbarHeader = () =>{
                 </ul>
                 <div className='signin-container'>
                     <UserAvatar style={{margin : '10px'}} size="32"/>
-                    <a href="#" className="action-btn">Sign In / Sign Up</a>
+                    <a href="/sign-in" className="action-btn">Sign In</a>
+                    <p href="#" className="action-btn"> / </p>
+                    <a href="#" className="action-btn">Sign Up</a>
                 </div>
                     
                 <div className="toggle-btn">

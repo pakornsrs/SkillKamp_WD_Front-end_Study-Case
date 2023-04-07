@@ -6,7 +6,7 @@ const ContactForm = () =>{
 
         <div className='header-form-container'>
             <div className='form-header'>
-                <p>For any question, please send us a message.</p>
+                <p style={{color:'black'}}>For any question, please send us a message.</p>
             </div>
             <form className='contact-form'>
             <div className='name-container'>
