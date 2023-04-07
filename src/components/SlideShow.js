@@ -1,8 +1,8 @@
 import React, { useState, useEffect  } from 'react';
-import '../../css/SlideShow.css';
-import Banner1 from '../../Assets/Banner/Banner1.png'
-import Banner2 from '../../Assets/Banner/Banner2.png'
-import Banner3 from '../../Assets/Banner/Banner3.png'
+import '../css/SlideShow.css';
+import Banner1 from '../Assets/Banner/Banner1.png'
+import Banner2 from '../Assets/Banner/Banner2.png'
+import Banner3 from '../Assets/Banner/Banner3.png'
 
 const SlideShow = () =>{
 

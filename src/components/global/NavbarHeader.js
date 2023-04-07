@@ -2,7 +2,7 @@ import React from 'react';
 import '../../css/Navbar.css';
 import {UserAvatar,Menu} from '@carbon/icons-react'
 
-const Navbar = () =>{
+const NavbarHeader = () =>{
 
     return(
         <div className='header-navbar-container'>
@@ -14,7 +14,7 @@ const Navbar = () =>{
                     <li><a href="Home">Home</a></li>
                     <li><a href="Home">Shop Collection</a></li>
                     <li><a href="Home">Our Story</a></li>
-                    <li><a href="Home">Contract</a></li>
+                    <li><a href="/contact">Contact</a></li>
                 </ul>
                 <div className='signin-container'>
                     <UserAvatar style={{margin : '10px'}} size="32"/>
@@ -30,4 +30,4 @@ const Navbar = () =>{
     );
 }
 
-export default Navbar;
+export default NavbarHeader;
