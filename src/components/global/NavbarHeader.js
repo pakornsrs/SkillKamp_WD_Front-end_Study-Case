@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import '../../css/Navbar.css';
 import {UserAvatar,Menu} from '@carbon/icons-react'
 
@@ -19,14 +19,14 @@ const NavbarHeader = () =>{
                 <div className='signin-container'>
                     <UserAvatar style={{margin : '10px'}} size="32"/>
                     <a href="/sign-in" className="action-btn">Sign In</a>
-                    <p href="#" className="action-btn"> / </p>
-                    <a href="#" className="action-btn">Sign Up</a>
+                    <a href="#"> / </a>
+                    <a className="action-btn">Sign Up</a>
                 </div>
                     
                 <div className="toggle-btn">
                     <Menu size="32"/>
                 </div>
-                </div>  
+                </div> 
         </div>
 
     );

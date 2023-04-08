@@ -1,0 +1,4 @@
+{
+    "BasePath" : "http://localhost:5039",
+    "SignIn" : "/api/user/login"
+}
