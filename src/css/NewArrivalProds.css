@@ -1,0 +1,24 @@
+.new-arrival-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: auto;
+}
+
+.new-arrival-container > p{
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+}
+
+.gallery{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0;
+}

@@ -1,4 +1,5 @@
 {
     "BasePath" : "http://localhost:5039",
-    "SignIn" : "/api/user/login"
+    "SignIn" : "/api/user/login",
+    "NewArrival":"/api/product/new"
 }

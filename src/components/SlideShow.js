@@ -4,6 +4,7 @@ import Banner1 from '../Assets/Banner/Banner1.png'
 import Banner2 from '../Assets/Banner/Banner2.png'
 import Banner3 from '../Assets/Banner/Banner3.png'
 
+
 const SlideShow = () =>{
 
     const imgs = new Array(Banner1,Banner2,Banner3,Banner1,Banner2);
@@ -22,6 +23,20 @@ const SlideShow = () =>{
         setActiveButtons(value);
         activeActiveSlides(value)
     };
+
+    let count = 0
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            count = (count + 1) % imgs.length;
+            
+            setImageUrl(imgs[count])
+            setActiveButtons(count);
+            activeActiveSlides(count)
+
+        }, 5000);
+        return () => clearInterval(interval);
+      }, [imageUrl]);
 
 
 
