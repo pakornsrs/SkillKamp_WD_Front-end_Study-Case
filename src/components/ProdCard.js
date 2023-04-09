@@ -5,7 +5,7 @@ import axios from 'axios'
 import service from '../config/service_path.json'
 import { Star, StarFilled, StarHalf } from '@carbon/icons-react'
 
-const ProdCard = () => {
+const ProdCard = (props) => {
 
     const [newArrivalProd, setNewArrivalProd] = useState([]);
 
@@ -30,6 +30,10 @@ const ProdCard = () => {
     const myArray = Object.keys(products).map(key => {
         return { key: key, value: products[key] };
     });
+
+    const addToCart =(product) =>{
+        props.selectedProduct(product)
+    }
 
 
     return (
@@ -72,7 +76,7 @@ const ProdCard = () => {
                         <p id='review-count'>{"(Reviewers :" + data.value.reviewCount + ")"}</p>
                         <div className="buy-button-container">
                             <button className="buy-now">Buy Now</button>
-                            <button className="buy-add-cart">Add to Cart</button>
+                            <button className="buy-add-cart" onClick={()=>addToCart(data.value)}>Add to Cart</button>
                         </div>
                     </div>
                 ))

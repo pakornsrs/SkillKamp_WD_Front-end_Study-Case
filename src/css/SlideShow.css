@@ -30,7 +30,7 @@
 
 
 .navigation{
-    z-index: 10;
+    z-index: 3;
     position: absolute;
     display: flex;
     bottom: 50px;

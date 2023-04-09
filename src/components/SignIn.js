@@ -7,7 +7,7 @@ import ModalBase from './global/ModalBase';
 import '../css/SingInOut.css';
 
 
-const SignIn = () => {
+const SignIn = (props) => {
 
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
@@ -24,7 +24,13 @@ const SignIn = () => {
         setPassword(event.target.value);
     }
 
+    const goHomeSignSuccess =() => {
+        navigate('/home');
+    }
+
     const userSignIn = async () => {
+
+        setIsLoading(true);
 
         // Validate
         if ((username == null || username.trim().length === 0)) {
@@ -61,9 +67,7 @@ const SignIn = () => {
 
         try {
 
-            setIsLoading(true);
             var rest = await axios.post(path, body, config);
-            setIsLoading(false);
 
             if (rest.data.isError) {
 
@@ -73,8 +77,21 @@ const SignIn = () => {
                 return;
             }
 
+            localStorage.removeItem("userId");
+            localStorage.removeItem("username");
+            localStorage.removeItem("webToken");
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("userId", rest.data.item.user.id);
+            localStorage.setItem("webToken", rest.data.item.userToken);
+
+            setIsLoading(false);
+            props.setNewUSername(username)
+
             setModalData({ "title": "Signin Error", "message": rest.data.errorMessage, "isShowImg": true, "showImageType": "correct" })
             setIsShowModal(true)
+
+            goHomeSignSuccess();
         }
         catch {
 

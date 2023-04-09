@@ -18,6 +18,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    z-index: 20;
 }
 
 .overlay {
@@ -32,6 +34,8 @@
     height: 300px;
 
     position: absolute;
+
+    z-index: 21;
 }
 
 

@@ -8,7 +8,7 @@ const NewArrivalProds =(props)=>{
         <div className='new-arrival-container'>
             <p id='new-arrival-header'>New Arrival</p>
             <div className='gallery'>
-                <ProdCard/>
+                <ProdCard selectedProduct = {props.selectedProduct}/>
             </div>
 
         </div>

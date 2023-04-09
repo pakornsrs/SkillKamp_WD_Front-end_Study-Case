@@ -1,5 +1,7 @@
 {
     "BasePath" : "http://localhost:5039",
     "SignIn" : "/api/user/login",
-    "NewArrival":"/api/product/new"
+    "NewArrival":"/api/product/new",
+    "ProductDetail":"/api/product/detail/get",
+    "AddToCart": "/api/cart/add/new"
 }
