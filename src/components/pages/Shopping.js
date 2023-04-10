@@ -15,8 +15,53 @@ const Shopping = (props) => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [productFullDetail, setProductFullDetail] = useState(null);
 
+    const [productColor, setProductColor] = useState(null);
+    const [productSize, setProductSize] = useState(null);
+    const [productCategory, setProductCategory] = useState(null);
+
     useEffect(() => {
-        
+
+        let pathCategory = service.BasePath + service.GetAllCategory;
+        let pathSize = service.BasePath + service.GetAllProductSize;
+        let pathColor = service.BasePath + service.GetAllProductColor;
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        axios.get(pathCategory, config).then(((res) => {
+            if (!res.data.isError) {
+
+                const myArray = Object.keys(res.data.item).map(key => {
+                    return { key: key, value: res.data.item[key] };
+                });
+                setProductCategory(myArray);
+            }
+        }));
+
+        axios.get(pathSize, config).then(((res) => {
+            if (!res.data.isError) {
+                const myArray = Object.keys(res.data.item).map(key => {
+                    return { key: key, value: res.data.item[key] };
+                });
+                setProductSize(myArray);
+            }
+        }));
+
+        axios.get(pathColor, config).then(((res) => {
+            if (!res.data.isError) {
+                const myArray = Object.keys(res.data.item).map(key => {
+                    return { key: key, value: res.data.item[key] };
+                });
+                setProductColor(myArray);
+            }
+        }));
+    }, [])
+
+    useEffect(() => {
+
         if (selectedProduct != null) {
 
             let path = service.BasePath + service.ProductDetail;
@@ -39,18 +84,19 @@ const Shopping = (props) => {
 
                     console.log("res", res.data.item)
                     setProductFullDetail(res.data.item);
-                    
+
                 }));
             }
-            catch{
+            catch {
 
             }
 
             document.body.style.overflow = 'hidden';
             setShowProduct(true)
         }
-    
+
     }, [selectedProduct]);
+
 
 
 
@@ -60,62 +106,71 @@ const Shopping = (props) => {
         document.body.style.overflow = 'auto';
     }
 
-    const updateSearchKey =(event)=>{
+    const updateSearchKey = (event) => {
         setSearchKey(event.target.value);
     }
 
     return (
         <React.Fragment>
-            <SlideShow/>
+            <SlideShow />
             <div className='shopping-page-main-container'>
-            <h1>Shopping Collection</h1>
-            <div className='search-bar-container'>
-                <input type='text' placeholder='Search Keyword' id='search-keyword-input' onChange={updateSearchKey}></input>
-                <button id='search-keyword-button'></button>
-            
-            </div>
-            <div className='product-list-container'>
-                <div className="filter-container">
+                <h1>Shopping Collection</h1>
+                <div className='search-bar-container'>
+                    <input type='text' placeholder='Search Keyword' id='search-keyword-input' onChange={updateSearchKey}></input>
+                    <button id='search-keyword-button'></button>
 
-                    <div className="dropdown">
-                        <p id='filter-title'>Category of Product</p>
-                        <button className="dropbtn">Dropdown</button>
-                        <div className="dropdown-content">
-                            <a href="#">Link 1</a>
-                            <a href="#">Link 2</a>
-                            <a href="#">Link 3</a>
+                </div>
+                <div className='product-list-container'>
+                    <div className="filter-container">
+
+                        <div className="dropdown">
+                            <p id='filter-title'>Category of Product</p>
+                            <button className="dropbtn">All Categories</button>
+                            <div className="dropdown-content">
+                                <p>All Categories</p>
+                                {
+                                    productCategory != null && productCategory.map((data) => (
+                                        <p key={data.key}>{data.value.nameEn}</p>
+                                    ))
+                                }
+                            </div>
                         </div>
+
+                        <div className="dropdown">
+                            <p id='filter-title'>Color of Product</p>
+                            <button className="dropbtn">All Colors</button>
+                            <div className="dropdown-content">
+                                <p>All Colors</p>
+                                {
+                                    productColor != null && productColor.map((data) => (
+                                        <p key={data.key}>{data.value.colorNameEn}</p>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
+                        <div className="dropdown">
+                            <p id='filter-title'>Size of Product</p>
+                            <button className="dropbtn">All Sizes</button>
+                            <div className="dropdown-content">
+                                <p>All Sizes</p>
+                                {
+                                    productSize != null && productSize.map((data) => (
+                                        <p key={data.key}>{data.value.sizeDescEn}</p>
+                                    ))
+                                }
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div className="dropdown">
-                        <p id='filter-title'>Color of Product</p>
-                        <button className="dropbtn">Dropdown</button>
-                        <div className="dropdown-content">
-                            <a href="#">Link 1</a>
-                            <a href="#">Link 2</a>
-                            <a href="#">Link 3</a>
-                        </div>
-                    </div>
-
-                    <div className="dropdown">
-                        <p id='filter-title'>Size of Product</p>
-                        <button className="dropbtn">Dropdown</button>
-                        <div className="dropdown-content">
-                            <a href="#">Link 1</a>
-                            <a href="#">Link 2</a>
-                            <a href="#">Link 3</a>
-                        </div>
+                    <div className='product-card-container'>
+                        <ProdCardMini setSelectedProduct={setSelectedProduct} keyword={searchKey} />
                     </div>
 
                 </div>
-
-                <div className='product-card-container'>
-                    <ProdCardMini setSelectedProduct = {setSelectedProduct} keyword ={searchKey} />
-                </div>
-
             </div>
-        </div>
-        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail = {selectedProduct} setCartItem = {props.setCartItem}/>}
+            {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} />}
         </React.Fragment>
     )
 }

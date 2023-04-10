@@ -160,6 +160,15 @@ const ProductDetailModal = (props) => {
                 return;
             }
 
+            // Total price
+            if (totalPrice <= 0) {
+                setModalData({ "title": "Add product to cart error", "message": "Calculated price error.", "isShowImg": true, "showImageType": "alert" })
+                setIsShowModal(true)
+
+                return;
+            }
+
+
             let path = service.BasePath + service.AddToCart;
             let body = "";
 
@@ -167,7 +176,8 @@ const ProductDetailModal = (props) => {
                 "userId": userId,
                 "productId": finalSelectProduct.productId,
                 "productDetail": finalSelectProduct.productDetailId,
-                "quantity": quantity
+                "quantity": quantity,
+                "price" : totalPrice
 
             })
 
@@ -224,7 +234,9 @@ const ProductDetailModal = (props) => {
 
     try{
         axios.post(path, body, config).then(((res) => {
-            props.setCartItem(res.data.item)
+            if(!res.data.isError){
+                props.setCartItem(res.data.item)
+            }
         }));
     }
     catch{

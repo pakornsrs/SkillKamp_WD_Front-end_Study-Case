@@ -5,5 +5,13 @@
     "ProductDetail":"/api/product/detail/get",
     "AddToCart": "/api/cart/add/new",
     "SearchProduct" : "/api/product/search",
-    "GetCartCount" : "/api/card/item/count"
+    "GetCartCount" : "/api/card/item/count",
+    "GetAllCartItem" : "/api/card/item/get/all",
+    "RemoveCartItem" : "/api/cart/remove",
+    "AddMoreCartItem" : "/api/cart/add/quantity",
+    "ReduceCartItem" : "/api/cart/reduce/quantit",
+    "GetAllCategory" : "/api/product/category/list",
+    "GetAllProductColor" : "/api/product/color/list",
+    "GetAllProductSize" : "/api/product/size/list"
+
 }

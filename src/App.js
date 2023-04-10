@@ -20,35 +20,36 @@ function App() {
   const [cartItemCount, setCartItemCount] = useState(0);
 
   useEffect(() => {
-    console.log("On load get count")
-    if(userId != null){
-      
-      console.log("OGet in")
-      let userId = localStorage.getItem("userId");
-
-    let path = service.BasePath + service.GetCartCount;
-    let body = "";
-
-    body = JSON.stringify({
-    "userId": userId,
-    })
-
-    const config = {
-        headers: {
-            "Content-Type": "application/json"
-        }
-    }
-
-    try{
-        axios.post(path, body, config).then(((res) => {
-            setCartItemCount(res.data.item)
-        }));
-    }
-    catch{
-
-    }
+    if (userId != null) {
+      updateCartItem();
     }
   }, []);
+
+  const updateCartItem = () =>{
+    let userId = localStorage.getItem("userId");
+
+      let path = service.BasePath + service.GetCartCount;
+      let body = "";
+
+      body = JSON.stringify({
+        "userId": userId,
+      })
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+
+      try {
+          axios.post(path, body, config).then(((res) => {
+          setCartItemCount(res.data.item)
+        }));
+      }
+      catch {
+
+      }
+  }
 
 
   useEffect(() => {
@@ -74,14 +75,14 @@ function App() {
 
   return (
     <div>
-      <Navbar username={username} userSignOut={userSignOut} cartItemCount = {cartItemCount}/>
+      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem} />
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/home' element={<Home setCartItemCount = {setCartItemCount} cartItemCount = {cartItemCount} setCartItem = {setCartItemCount} />} />
+          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
+          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/sign-in' element={<SingInOut setNewUSername = {setUsername}/>} />
-          <Route path='/shop' element={<Shopping setCartItemCount = {setCartItemCount} cartItemCount = {cartItemCount} setCartItem = {setCartItemCount}/>} />
+          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} />} />
+          <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
         </Routes>
       </BrowserRouter>
       <Footer />

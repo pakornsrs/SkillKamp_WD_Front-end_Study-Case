@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import '../../css/Navbar.css';
 import { UserAvatar, Menu, ShoppingCart, Email } from '@carbon/icons-react'
+import CartItem from '../pages/CartItem';
 
 const NavbarHeader = (props) => {
 
@@ -8,6 +9,8 @@ const NavbarHeader = (props) => {
     const [userDropdownActive, setUserDropdownActive] = useState(false);
     const [userCartItemCount, setUserCartItemCount] = useState(0);
     const [userCouponCount, setUserCouponCount] = useState(0);
+
+    const [showCartItem, setShowCartItem] = useState(false);
 
     useEffect(() => {
 
@@ -46,7 +49,7 @@ const NavbarHeader = (props) => {
                     <a className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }} >Sign Up</a>
                     <p id='username' onMouseOver={mouseOverUsername} >{props.username}</p>
                     <div className='shopping-cart-container'>
-                        <ShoppingCart size="32" className='shoping-cart' />
+                        <ShoppingCart size="32" className='shoping-cart' onMouseDown={() => setShowCartItem(true)}/>
                         <div className='counting-container' style={{display:userCartItemCount <= 0 ? 'none' : 'flex'}}>{userCartItemCount}</div>
                     </div>
                     <div className='shopping-cart-container'>
@@ -65,7 +68,7 @@ const NavbarHeader = (props) => {
                     <Menu size="32" />
                 </div>
             </div>
-
+            {showCartItem && <CartItem setShowCartItem = {setShowCartItem} updateCartItem = {props.updateCartItem}/>}
         </div>
 
     );
