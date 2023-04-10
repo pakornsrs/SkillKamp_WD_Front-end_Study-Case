@@ -6,6 +6,14 @@ const NavbarHeader = (props) => {
 
     console.log(props.username)
     const [userDropdownActive, setUserDropdownActive] = useState(false);
+    const [userCartItemCount, setUserCartItemCount] = useState(0);
+    const [userCouponCount, setUserCouponCount] = useState(0);
+
+    useEffect(() => {
+
+        setUserCartItemCount(props.cartItemCount)
+
+    }, [props.cartItemCount]);
 
     const mouseOverUsername = () => {
         setUserDropdownActive(true)
@@ -26,8 +34,8 @@ const NavbarHeader = (props) => {
             </div>
             <div className="navbar">
                 <ul className="links">
-                    <li><a href="Home">Home</a></li>
-                    <li><a href="Home">Shop Collection</a></li>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/shop">Shop Collection</a></li>
                     <li><a href="Home">Our Story</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
@@ -39,11 +47,11 @@ const NavbarHeader = (props) => {
                     <p id='username' onMouseOver={mouseOverUsername} >{props.username}</p>
                     <div className='shopping-cart-container'>
                         <ShoppingCart size="32" className='shoping-cart' />
-                        <div className='counting-container'>2</div>
+                        <div className='counting-container' style={{display:userCartItemCount <= 0 ? 'none' : 'flex'}}>{userCartItemCount}</div>
                     </div>
                     <div className='shopping-cart-container'>
                         <Email size="32" />
-                        <div className='counting-container'>2</div>
+                        <div className='counting-container' style={{display:userCouponCount <= 0 ? 'none' : 'flex'}}>{userCouponCount}</div>
                     </div>
                     <div className='username-dropdown' onMouseOver={mouseOverUsername} onMouseOut={mouseOutUsername} style={{ display: userDropdownActive ? 'flex' : 'none' }}>
                         <ul className="username-dropdown-list">

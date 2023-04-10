@@ -3,5 +3,7 @@
     "SignIn" : "/api/user/login",
     "NewArrival":"/api/product/new",
     "ProductDetail":"/api/product/detail/get",
-    "AddToCart": "/api/cart/add/new"
+    "AddToCart": "/api/cart/add/new",
+    "SearchProduct" : "/api/product/search",
+    "GetCartCount" : "/api/card/item/count"
 }

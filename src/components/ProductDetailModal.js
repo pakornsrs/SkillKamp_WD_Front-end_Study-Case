@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import '../css/ProductDetailModal.css'
-import { Star, StarFilled, StarHalf } from '@carbon/icons-react'
+import { Star, StarFilled, StarHalf, Term } from '@carbon/icons-react'
 import axios from 'axios'
 import service from '../config/service_path.json'
 import ModalBase from './global/ModalBase';
@@ -181,12 +181,18 @@ const ProductDetailModal = (props) => {
 
                 axios.post(path, body, config).then(((res) => {
 
-                    console.log("res log", res.data.item)
+                    if(!res.data.isError){
+                        getItemCartCount()
+                        onClosingDialog();
 
-                    setModalData({ "title": "Add item to cart", "message": "Success.", "isShowImg": true, "showImageType": "correct" })
+                        return;
+                    }
+
+                    setModalData({ "title": "Error", "message": "System error.", "isShowImg": true, "showImageType": "error" })
                     setIsShowModal(true)
 
                 }));
+
             }
             catch {
                 setModalData({ "title": "Error", "message": "System error.", "isShowImg": true, "showImageType": "error" })
@@ -197,6 +203,36 @@ const ProductDetailModal = (props) => {
 
         }
     }
+
+    
+  const getItemCartCount = () => {
+        
+    let userId = localStorage.getItem("userId");
+
+    let path = service.BasePath + service.GetCartCount;
+    let body = "";
+
+    body = JSON.stringify({
+    "userId": userId,
+    })
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+
+    try{
+        axios.post(path, body, config).then(((res) => {
+            props.setCartItem(res.data.item)
+        }));
+    }
+    catch{
+
+    }
+}
+
+
 
     return (
         <div className='product-detail-modal-container'>

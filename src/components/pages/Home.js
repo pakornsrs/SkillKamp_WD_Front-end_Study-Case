@@ -8,7 +8,7 @@ import ModalBase from '../global/ModalBase.js'
 import LoadingScreen from '../global/LoadingScreen.js'
 import ProductDetailModal from '../ProductDetailModal.js'
 
-const Home = () => {
+const Home = (props) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);
@@ -68,7 +68,7 @@ const Home = () => {
                             <SlideShow />
                             <NewArrivalProds selectedProduct={setSelectedProduct} />
                         </React.Fragment>
-                        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail = {selectedProduct} />}
+                        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail = {selectedProduct} setCartItem = {props.setCartItem}/>}
                     </React.Fragment>
             }
         </React.Fragment>
