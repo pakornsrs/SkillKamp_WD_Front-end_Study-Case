@@ -65,7 +65,9 @@ const Home = (props) => {
                     :
                     <React.Fragment>
                         <React.Fragment>
-                            <SlideShow />
+                            <div>
+                                <SlideShow />
+                            </div>
                             <NewArrivalProds selectedProduct={setSelectedProduct} />
                         </React.Fragment>
                         {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail = {selectedProduct} setCartItem = {props.setCartItem}/>}

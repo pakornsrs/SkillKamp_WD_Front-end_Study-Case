@@ -31,7 +31,6 @@
 #search-keyword-button{
     width: 100px;
     height: 40px;
-    margin-left: 50px ;
 
     font-size: 1rem;
     
@@ -66,6 +65,7 @@
     cursor: pointer;
 
     width: 200px;
+    margin: 0;
   }
   
   
@@ -78,14 +78,14 @@
     z-index: 1;
   }
   
-  .dropdown-content a {
+  .dropdown-content p {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
   }
   
-  .dropdown-content a:hover {background-color: #f1f1f1}
+  .dropdown-content p:hover {background-color: #f1f1f1}
   
   .dropdown:hover .dropdown-content {
     display: block;
@@ -105,7 +105,89 @@
     width: 100%;
     height: auto;
     flex-wrap: wrap;
-    padding: 0px 20px 0px 20px;
-
-    background-color: white;
   }
+
+  #page-header{
+    margin-top: 50px;
+  }
+
+
+
+
+
+
+
+
+
+  @media(max-width:768px){
+    
+    .product-list-container{
+      width: 100%;
+      height: auto;
+  
+      display: flex;
+      flex-direction: column;
+      
+  }
+
+  .filter-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 300px;
+
+    margin-top: -90px;
+
+}
+
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+
+    width: 200px;
+    padding: 8px;
+
+    margin-top: -20px ;
+  }
+  
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+  }
+  
+  .dropdown-content p {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content p:hover {background-color: #f1f1f1}
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+    width: 200px;
+  }
+  
+  #page-header{
+    margin-top: 30px;
+
+    font-size: 2rem;
+  }
+
+
+}

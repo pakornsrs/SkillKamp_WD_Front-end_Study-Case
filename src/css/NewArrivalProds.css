@@ -22,3 +22,14 @@
     align-items: center;
     margin: 50px 0;
 }
+
+@media(max-width:768px){
+    .new-arrival-container{
+        margin-top: 0px;
+    }
+
+    .gallery{
+        margin: 20px 0;
+    }
+}
+

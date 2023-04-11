@@ -210,8 +210,11 @@ button.buy-add-cart:hover{
     }
 }
 
-@media(max-width:750px){
+@media(max-width:768px){
     .content{
         width: 100%;
     }
+
+    
+
 }

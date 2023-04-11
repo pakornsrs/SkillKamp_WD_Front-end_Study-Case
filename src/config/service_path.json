@@ -12,6 +12,7 @@
     "ReduceCartItem" : "/api/cart/reduce/quantit",
     "GetAllCategory" : "/api/product/category/list",
     "GetAllProductColor" : "/api/product/color/list",
-    "GetAllProductSize" : "/api/product/size/list"
+    "GetAllProductSize" : "/api/product/size/list",
+    "PlaceOrder" : "/api/order/create"
 
 }

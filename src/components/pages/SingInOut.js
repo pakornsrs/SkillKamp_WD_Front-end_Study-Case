@@ -7,7 +7,7 @@ const SingInOut =(props)=>{
 
     return(
         <div className='page-container'>
-            <SignIn setNewUSername = {props.setNewUSername}/>
+            <SignIn setNewUSername = {props.setNewUSername} updateCartItem = {props.updateCartItem}/>
         </div>
     );
 }

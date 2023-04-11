@@ -114,7 +114,7 @@ const Shopping = (props) => {
         <React.Fragment>
             <SlideShow />
             <div className='shopping-page-main-container'>
-                <h1>Shopping Collection</h1>
+                <h1 id='page-header'>Shopping Collection</h1>
                 <div className='search-bar-container'>
                     <input type='text' placeholder='Search Keyword' id='search-keyword-input' onChange={updateSearchKey}></input>
                     <button id='search-keyword-button'></button>

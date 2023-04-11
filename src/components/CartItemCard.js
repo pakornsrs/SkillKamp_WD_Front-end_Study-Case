@@ -28,7 +28,10 @@ const CartItemCard = (props) => {
             axios.post(path, body, config).then(res => {
                 if (!res.data.tsError) {
                     setProductCartIrem(res.data.item)
-                    props.setCartItem(res.data.item)
+
+                    if (props.enableEdit) {
+                        props.setCartItem(res.data.item)
+                    }
                 }
             });
         }
@@ -43,81 +46,81 @@ const CartItemCard = (props) => {
         return { key: key, value: products[key] };
     });
 
-    const removeItemFromCart =(item) =>{
-        
+    const removeItemFromCart = (item) => {
+
         let path = service.BasePath + service.RemoveCartItem;
-            let body = ""
+        let body = ""
 
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
             }
+        }
 
-            body = JSON.stringify({
-                "cartItemId": item.cartItemId
-            })
+        body = JSON.stringify({
+            "cartItemId": item.cartItemId
+        })
 
-            console.log(body)
+        console.log(body)
 
-            axios.post(path, body, config).then(res => {
-                if (!res.data.tsError) {
-                    props.updateCartItem();
-                    setProductCartIrem([])
-                }
-            });
+        axios.post(path, body, config).then(res => {
+            if (!res.data.tsError) {
+                props.updateCartItem();
+                setProductCartIrem([])
+            }
+        });
     }
 
-    const addMoreItemToCart =(item) =>{
-        
+    const addMoreItemToCart = (item) => {
+
         let path = service.BasePath + service.AddMoreCartItem;
-            let body = ""
+        let body = ""
 
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
             }
+        }
 
-            body = JSON.stringify({
-                "cartItemId": item.cartItemId,
-                "quantiry" : 1
-            })
+        body = JSON.stringify({
+            "cartItemId": item.cartItemId,
+            "quantiry": 1
+        })
 
-            console.log(body)
+        console.log(body)
 
-            axios.post(path, body, config).then(res => {
-                if (!res.data.tsError) {
-                    props.updateCartItem();
-                    setProductCartIrem([])
-                }
-            });
+        axios.post(path, body, config).then(res => {
+            if (!res.data.tsError) {
+                props.updateCartItem();
+                setProductCartIrem([])
+            }
+        });
     }
 
-    const reduceItemFromCart =(item) =>{
-        
+    const reduceItemFromCart = (item) => {
+
         let path = service.BasePath + service.ReduceCartItem;
-            let body = ""
+        let body = ""
 
-            const config = {
-                headers: {
-                    "Content-Type": "application/json"
-                }
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
             }
+        }
 
-            body = JSON.stringify({
-                "cartItemId": item.cartItemId,
-                "quantiry" : 1
-            })
+        body = JSON.stringify({
+            "cartItemId": item.cartItemId,
+            "quantiry": 1
+        })
 
-            console.log(body)
+        console.log(body)
 
-            axios.post(path, body, config).then(res => {
-                if (!res.data.tsError) {
-                    props.updateCartItem();
-                    setProductCartIrem([])
-                }
-            });
+        axios.post(path, body, config).then(res => {
+            if (!res.data.tsError) {
+                props.updateCartItem();
+                setProductCartIrem([])
+            }
+        });
     }
 
     return (
@@ -129,7 +132,7 @@ const CartItemCard = (props) => {
                             <p id='cart-item-number'>{Number(data.key) + 1}</p>
                         </div>
                         <div className='cart-image-contaainer'>
-                            <img src={require('../Assets/Product/' + data.value.imagePath + '.png')} style={{ width: '100px', height: 'auto' }} />
+                            <img src={require('../Assets/Product/' + data.value.imagePath + '.png')}  />
                         </div>
                         <div className='cart-detail-contaainer'>
                             <p id='cart-product-name'>{data.value.productNameEn}</p>
@@ -137,10 +140,11 @@ const CartItemCard = (props) => {
                             <div className='color-size-container'>
                                 <div className='cart-color-container'>
                                     <div id='card-display-color' style={{ backgroundColor: data.value.colorCode, borderColor: data.value.colorId === 1 ? "#DADADA" : data.value.colorCode }}></div>
-                                    <p  id='color-desc'>{data.value.colorDescEn}</p>
+                                    <p id='color-desc'>{data.value.colorDescEn}</p>
                                 </div>
                                 <div className='cart-size-container'>
-                                    <p  id='size-desc'>{"Size : " + data.value.sizeDescEn}</p>
+                                    <p id='size-desc'>{"Size : " + data.value.sizeDescEn}</p>
+                                    <p id='size-desc-mobile'>{data.value.sizeDescEn}</p>
                                 </div>
                             </div>
                         </div>
@@ -148,12 +152,12 @@ const CartItemCard = (props) => {
                             <p id='product-price-cart'>{data.value.price}</p>
                         </div>
                         <div className='cart-quatity-contaainer'>
-                            <button id='button-quantity' onClick={()=>addMoreItemToCart(data.value)}>+</button>
+                            <button id='button-quantity' onClick={() => reduceItemFromCart(data.value)} style={{ display: props.enableEdit ? 'block' : 'none' }}>-</button>
                             <input id='input-quantity' type='number' disabled value={data.value.quantity}></input>
-                            <button id='button-quantity' onClick={()=>reduceItemFromCart(data.value)}>-</button>
+                            <button id='button-quantity' onClick={() => addMoreItemToCart(data.value)} style={{ display: props.enableEdit ? 'block' : 'none' }}>+</button>
                         </div>
                         <div className='cart-action-contaainer'>
-                            <button id='button-delete' onClick={() => removeItemFromCart(data.value)}>
+                            <button id='button-delete' onClick={() => removeItemFromCart(data.value)} style={{ display: props.enableEdit ? 'block' : 'none' }}>
                                 <TrashCan size="32" />
                             </button>
                         </div>

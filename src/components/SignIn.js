@@ -91,6 +91,8 @@ const SignIn = (props) => {
             setModalData({ "title": "Signin Error", "message": rest.data.errorMessage, "isShowImg": true, "showImageType": "correct" })
             setIsShowModal(true)
 
+            props.updateCartItem()
+
             goHomeSignSuccess();
         }
         catch {

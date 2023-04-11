@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 import Navbar from './components/global/NavbarHeader.js';
 import Home from './components/pages/Home.js';
 import Contact from './components/pages/Contact.js';
 import Footer from './components/global/Footer.js';
 import SingInOut from './components/pages/SingInOut.js';
 import Shopping from './components/pages/Shopping.js';
+import PlaceOrder from './components/pages/PlaceOrder.js';
 import axios from 'axios';
 import service from './config/service_path.json'
 
 import './css/App.css';
+import { Rotate } from '@carbon/icons-react';
 
 function App() {
 
@@ -18,12 +21,14 @@ function App() {
   const [webToken, setWebToken] = useState(localStorage.getItem("webToken"));
 
   const [cartItemCount, setCartItemCount] = useState(0);
+  const [confirmPlaceOrder, setConfirmPlaceOrder] = useState(null)
 
   useEffect(() => {
     if (userId != null) {
       updateCartItem();
     }
   }, []);
+
 
   const updateCartItem = () =>{
     let userId = localStorage.getItem("userId");
@@ -51,7 +56,6 @@ function App() {
       }
   }
 
-
   useEffect(() => {
     let userId = localStorage.getItem("userId");
     let webToken = localStorage.getItem("webToken");
@@ -70,19 +74,21 @@ function App() {
     localStorage.removeItem("webToken");
 
     setUsername(null)
+    setCartItemCount(0)
 
   }
 
   return (
     <div>
-      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem} />
+      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem}/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
           <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} />} />
+          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem}/>} />
           <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
+          <Route path='/order'element={<PlaceOrder/>} />
         </Routes>
       </BrowserRouter>
       <Footer />

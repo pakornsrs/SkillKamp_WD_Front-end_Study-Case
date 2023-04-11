@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import '../../css/CartItem.css'
-import CartItemCard from '../CartItemCard';
+import CartItemCard from '../CartItemCard.js'
 
 const CartItem = (props) => {
 
@@ -24,6 +24,10 @@ const CartItem = (props) => {
         }
 
         return sum;
+    }
+
+    const navigateToPlaceOrder = () => {
+
     }
 
     return (
@@ -54,14 +58,16 @@ const CartItem = (props) => {
                     </div>
                 </div>
                 <div className='cart-item-card-container'>
-                    <CartItemCard setCartItem = {setCartItem} updateCartItem = {props.updateCartItem}/>
+                    <CartItemCard setCartItem = {setCartItem} updateCartItem = {props.updateCartItem} enableEdit = {true}/>
                 </div>
                 <div className='cart-item-total-container'>
                     <p id='total-amount'>Total Price : </p>
                     <p id='total-amount'>{ totalPrice + "฿"}</p>
                 </div>
                 <div className='cart-item-button-container'>
-                    <button className='cart-btn' id='cart-btn-place-order'>PLACE ORDER</button>
+                    <a href='/order'>
+                    <button className='cart-btn' id='cart-btn-place-order' onClick={navigateToPlaceOrder}>PLACE ORDER</button>
+                    </a>
                     <button className='cart-btn' id='cart-btn-cancel' onClick={() => props.setShowCartItem(false)}>CANCEL</button>
                 </div>
             </div>
