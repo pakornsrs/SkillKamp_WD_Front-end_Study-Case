@@ -9,7 +9,10 @@ const CartItemCard = (props) => {
     const [productCartIrem, setProductCartIrem] = useState([]);
 
     useEffect(() => {
+        loadCartITem();
+    }, []);
 
+    const loadCartITem = () =>{
         let userId = localStorage.getItem("userId");
 
         if (userId != null) {
@@ -35,7 +38,7 @@ const CartItemCard = (props) => {
                 }
             });
         }
-    }, [productCartIrem]);
+    }
 
     useEffect(() => {
 
@@ -66,7 +69,8 @@ const CartItemCard = (props) => {
         axios.post(path, body, config).then(res => {
             if (!res.data.tsError) {
                 props.updateCartItem();
-                setProductCartIrem([])
+                loadCartITem();
+                //setProductCartIrem([])
             }
         });
     }
@@ -92,7 +96,8 @@ const CartItemCard = (props) => {
         axios.post(path, body, config).then(res => {
             if (!res.data.tsError) {
                 props.updateCartItem();
-                setProductCartIrem([])
+                loadCartITem();
+                // setProductCartIrem([])
             }
         });
     }
@@ -118,7 +123,8 @@ const CartItemCard = (props) => {
         axios.post(path, body, config).then(res => {
             if (!res.data.tsError) {
                 props.updateCartItem();
-                setProductCartIrem([])
+                loadCartITem();
+                // setProductCartIrem([])
             }
         });
     }

@@ -260,15 +260,35 @@ ul.detail-color li{
     margin: 0;
 
     border: 0;
+
+    font-weight: bold;
+    transition: 0.4s;
 }
 
 #size-selection-choise:hover{
 
     width: 100%;
-    border: 2px solid white;
-    color: greenyellow;
+    color: rgb(255, 187, 0);
 
     cursor: pointer;
+}
+
+#prod-detail-modal{
+    background-color: #687ee0;
+    transition: 0.4s;
+}
+
+#prod-detail-modal:hover{
+    background-color: orange;
+}
+
+#prod-detail-modal-cancel{
+    background-color: rgb(100, 100, 100);
+    transition: 0.4s;
+}
+
+#prod-detail-modal-cancel:hover{
+    background-color: rgb(155, 155, 155);
 }
 
 .prod-detail-quantity-container{

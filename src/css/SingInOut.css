@@ -17,13 +17,14 @@
     font-size: 2rem;
     color: black;
     font-weight: bold;
+    
 }
 
 
 .login-form-container{
 
-    width: 400px;
-    height: 450px;
+    width: 450px;
+    height: 600px;
     background-color: white;
 
     display: flex;
@@ -38,6 +39,12 @@
 #input-label{
     color: black;
     font-size: bold;
+
+    width: 100%;
+    text-align: left;
+
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .input-username-container {
@@ -77,13 +84,22 @@
 }
 
 .button-container{
-    width: 60%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #button-signin{
     margin-top: 30px;
-    width: 90px;
+    width: 110px;
     height: 40px;
+
+    background-color: #D2461C;
+    border: 0;
+    border-radius: 10PX;
+
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
 }

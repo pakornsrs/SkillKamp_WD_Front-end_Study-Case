@@ -244,8 +244,6 @@ const ProductDetailModal = (props) => {
     }
 }
 
-
-
     return (
         <div className='product-detail-modal-container'>
             <div className="overlay"></div>
@@ -262,16 +260,16 @@ const ProductDetailModal = (props) => {
                         <p id='product-desc-detail'>{props.prodDefultDetail.productDescEn}</p>
                         <ul className="prodeuct-detail-container-star">
                             {
-                                // [...Array(Math.floor(data.value.reviewCount == 0 ? 5 : data.value.rating))].map((_, index) => (
-                                //     data.value.reviewCount == 0 ?
-                                //         <li key={index}><Star className="fa fa-star checked" size="24"></Star></li>
-                                //         :
-                                //         <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
-                                // ))
-                                [...Array(Math.floor(props.prodDefultDetail.rating))].map((_, index) => (
-
-                                    <li key={index}><StarFilled className="single-star checked" size="24"></StarFilled></li>
+                                [...Array(Math.floor(props.prodDefultDetail.reviewCount == 0 ? 5 : props.prodDefultDetail.rating))].map((_, index) => (
+                                    props.prodDefultDetail.reviewCount == 0 ?
+                                        <li key={index}><Star className="fa fa-star checked" size="24"></Star></li>
+                                        :
+                                        <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
                                 ))
+                                // [...Array(Math.floor(props.prodDefultDetail.rating))].map((_, index) => (
+
+                                //     <li key={index}><StarFilled className="single-star checked" size="24"></StarFilled></li>
+                                // ))
                             }
                             {
                                 props.prodDefultDetail.rating % 1 > 0.5 ? <li><StarHalf className="single-star checked" size="24"></StarHalf></li> : null
@@ -342,8 +340,8 @@ const ProductDetailModal = (props) => {
                 </div>
 
                 <div className='product-modal-button-container'>
-                    <button onMouseDown={addToCartService}>OK</button>
-                    <button onMouseDown={onClosingDialog}>CANCEL</button>
+                    <button onMouseDown={addToCartService} id='prod-detail-modal'>OK</button>
+                    <button onMouseDown={onClosingDialog} id='prod-detail-modal-cancel'>CANCEL</button>
                 </div>
             </div>
             {isShowModal && <ModalBase closeModal={() => setIsShowModal(false)} data={modalData} />}

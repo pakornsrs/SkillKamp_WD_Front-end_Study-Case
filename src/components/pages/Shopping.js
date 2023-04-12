@@ -117,7 +117,7 @@ const Shopping = (props) => {
                 <h1 id='page-header'>Shopping Collection</h1>
                 <div className='search-bar-container'>
                     <input type='text' placeholder='Search Keyword' id='search-keyword-input' onChange={updateSearchKey}></input>
-                    <button id='search-keyword-button'></button>
+                    <button id='search-keyword-button'>Search</button>
 
                 </div>
                 <div className='product-list-container'>
@@ -148,20 +148,6 @@ const Shopping = (props) => {
                                 }
                             </div>
                         </div>
-
-                        <div className="dropdown">
-                            <p id='filter-title'>Size of Product</p>
-                            <button className="dropbtn">All Sizes</button>
-                            <div className="dropdown-content">
-                                <p>All Sizes</p>
-                                {
-                                    productSize != null && productSize.map((data) => (
-                                        <p key={data.key}>{data.value.sizeDescEn}</p>
-                                    ))
-                                }
-                            </div>
-                        </div>
-
                     </div>
 
                     <div className='product-card-container'>

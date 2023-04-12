@@ -13,6 +13,9 @@
     "GetAllCategory" : "/api/product/category/list",
     "GetAllProductColor" : "/api/product/color/list",
     "GetAllProductSize" : "/api/product/size/list",
-    "PlaceOrder" : "/api/order/create"
+    "PlaceOrder" : "/api/order/create",
+    "GetPaymentCard" : "/api/card/get",
+    "GetAddress": "/api/address/get",
+    "ApplyCoupon": "/api/coupon/apply"
 
 }

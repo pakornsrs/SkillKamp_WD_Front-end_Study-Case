@@ -7,6 +7,7 @@
     width: 100%;
     height: auto;
 
+    padding: 20px;
     border-top: 1px solid gray;
 }
 
@@ -22,17 +23,28 @@
 
 #search-keyword-input{
     width: 500px;
-    height: 40px;
+    height: 50px;
 
     font-size: 1rem;
+
+    border: #687ee0 1px solid;
+    border: 10px 0px 0px 10px;
+    padding: 10px;
 
 }
 
 #search-keyword-button{
     width: 100px;
-    height: 40px;
+    height: 50px;
 
     font-size: 1rem;
+
+    background-color: #687ee0;
+    border: 0;
+    border-radius: 0px 10px 10px 0px;
+
+    color: white;
+    font-weight: bold;
     
 }
 
@@ -47,9 +59,9 @@
 .filter-container{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    height: 400px;
+    height: 200px;
 
     margin-top:20px;
     margin-left: 20px;
@@ -57,7 +69,7 @@
 }
 
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: #687ee0;
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -66,6 +78,8 @@
 
     width: 200px;
     margin: 0;
+
+    border-radius: 10px;
   }
   
   
@@ -92,8 +106,9 @@
   }
   
   .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: #687ee0;
     width: 200px;
+    border-radius: 10px;
   }
 
   .product-card-container{
@@ -135,14 +150,14 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 300px;
+    height: 200px;
 
     margin-top: -90px;
 
 }
 
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: #687ee0;
     color: white;
     font-size: 16px;
     border: none;
@@ -152,6 +167,7 @@
     padding: 8px;
 
     margin-top: -20px ;
+    border-radius: 10px;
   }
   
   
@@ -179,8 +195,9 @@
   }
   
   .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
+    background-color: #687ee0;
     width: 200px;
+    border-radius: 10px;
   }
   
   #page-header{

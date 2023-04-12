@@ -74,9 +74,9 @@ const ProdCardMini = (props) => {
                                 //     <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
                                 // ))
                             }
-                            {
+                            {/* {
                                 data.value.rating % 1 > 0.5 ? <li><StarHalf className="fa fa-star checked" size="24"></StarHalf></li> : null
-                            }
+                            } */}
 
                         </ul>
                         <p id='review-count'>{"(Reviewers :" + data.value.reviewCount + ")"}</p>

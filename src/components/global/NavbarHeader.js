@@ -11,6 +11,7 @@ const NavbarHeader = (props) => {
     const [userCouponCount, setUserCouponCount] = useState(0);
 
     const [showCartItem, setShowCartItem] = useState(false);
+    const [showHamItem, setShowHamItem] = useState(false);
 
     useEffect(() => {
 
@@ -26,49 +27,69 @@ const NavbarHeader = (props) => {
         setUserDropdownActive(false)
     }
 
+    const UsernameToggle = () =>{
+
+        let status = userDropdownActive;
+        setUserDropdownActive(!status)
+    }
+
     const userSignOut = () => {
         props.userSignOut();
     }
 
+    const HamItemToggle = () =>{
+
+        let status = showHamItem;
+        setShowHamItem(!status)
+    }
+
+
     return (
         <div className='header-navbar-container'>
             <div className='header-container'>
-                <a href="#" id='brand-named'>Happy Kid</a>
+                <p id='brand-named'>happy kid</p>
             </div>
             <div className="navbar">
                 <ul className="links">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/shop">Shop Collection</a></li>
-                    <li><a href="Home">Our Story</a></li>
-                    <li><a href="/contact">Contact</a></li>
+                    <li><a id='main-menu' href="/">Home</a></li>
+                    <li><a id='main-menu' href="/shop">Shop Collection</a></li>
+                    <li><a id='main-menu' href="Home">Our Story</a></li>
+                    <li><a id='main-menu' href="/contact">Contact</a></li>
                 </ul>
                 <div className='signin-container'>
                     <UserAvatar style={{ margin: '10px' }} size="32" />
                     <a href="/sign-in" className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }}>Sign In</a>
                     <a href="#" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }}> / </a>
                     <a className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }} >Sign Up</a>
-                    <p id='username' onMouseOver={mouseOverUsername} >{props.username}</p>
+                    <p id='username' onClick={UsernameToggle} >{props.username}</p>
                     <div className='shopping-cart-container'>
-                        <ShoppingCart size="32" className='shoping-cart' onMouseDown={() => setShowCartItem(true)}/>
-                        <div className='counting-container' style={{display:userCartItemCount <= 0 ? 'none' : 'flex'}}>{userCartItemCount}</div>
+                        <ShoppingCart id='shopping-cart' size="32" className='shoping-cart' onMouseDown={() => setShowCartItem(true)} />
+                        <div className='counting-container' style={{ display: userCartItemCount <= 0 ? 'none' : 'flex' }}>{userCartItemCount}</div>
                     </div>
                     <div className='shopping-cart-container'>
-                        <Email size="32" />
-                        <div className='counting-container' style={{display:userCouponCount <= 0 ? 'none' : 'flex'}}>{userCouponCount}</div>
+                        <Email id='e-mail' size="32" />
+                        <div className='counting-container' style={{ display: userCouponCount <= 0 ? 'none' : 'flex' }}>{userCouponCount}</div>
                     </div>
-                    <div className='username-dropdown' onMouseOver={mouseOverUsername} onMouseOut={mouseOutUsername} style={{ display: userDropdownActive ? 'flex' : 'none' }}>
+                    <div className='username-dropdown' onClick={UsernameToggle}  style={{ display: userDropdownActive ? 'flex' : 'none' }}>
                         <ul className="username-dropdown-list">
-                            <li><a id='username-menu' href="#">My Profile</a></li>
-                            <li><a id='username-menu' href="#">Purchased History</a></li>
-                            <li><a id='username-menu' href="#" onClick={userSignOut}>Sign Out</a></li>
+                            <li><a id='link-ham' onClick={UsernameToggle} href="#">My Profile</a></li>
+                            <li><a id='link-ham' onClick={UsernameToggle} href="#">Purchased History</a></li>
+                            <li><a id='link-ham'href="#" onClick={userSignOut}>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
                 <div className="toggle-btn">
-                    <Menu size="32" />
+                    <Menu size="32" onClick={HamItemToggle}/>
+                    <div className='ham-menu' style={{display: showHamItem && 'flex'}}>
+                    <a id='link-ham' onClick={HamItemToggle} href="/">Home</a>
+                    <a id='link-ham' onClick={HamItemToggle} href="/shop">Shop Collection</a>
+                    <a id='link-ham' onClick={HamItemToggle} href="Home">Our Story</a>
+                    <a id='link-ham' onClick={HamItemToggle} href="/contact">Contact</a>
+
+                    </div>
                 </div>
             </div>
-            {showCartItem && <CartItem setShowCartItem = {setShowCartItem} updateCartItem = {props.updateCartItem}/>}
+            {showCartItem && <CartItem setShowCartItem={setShowCartItem} updateCartItem={props.updateCartItem} />}
         </div>
 
     );
