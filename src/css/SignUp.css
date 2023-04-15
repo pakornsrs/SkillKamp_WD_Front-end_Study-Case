@@ -1,0 +1,134 @@
+.page-container{
+    height: 100vh;
+    width: 100vw;
+
+    background-color: rgb(240, 240, 240);
+    position:fixed;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.register-form-container{
+    background-color: white;
+    width: 450px;
+    height: auto;
+    max-height: 600px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 30px;
+    padding-left: 30px;
+
+    border: 1px solid rgb(200, 200, 200);
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+
+    border-radius: 10px;
+}
+
+.input-area-container{
+    width: 100%;
+    height: 100%;
+
+    overflow-y:auto;
+}
+
+.title-signup p{
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+    
+}
+
+.input-container {
+    width: 100%;
+ }
+
+ .button-pannel-container{
+    position: relative;
+    bottom: 0;
+
+    height: auto;
+ }
+
+ .added-data-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    border: 1px solid rgb(200, 200, 200);
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+
+    margin-top: 10px;
+ }
+
+ .added-data-detail{
+    padding: 10px;
+    width: 80%;
+
+    overflow-wrap: break-word;
+ }
+
+ .added-data-detail > p{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    text-align: left;
+ }
+
+ .added-data-button{
+    width: 20%;
+ }
+
+ .added-data-button{
+    display: flex;
+    justify-content: right;
+    align-items: flex-end;
+    margin-right: 10px;
+ }
+
+ .added-del-button{
+    width: auto;
+    height: auto;
+
+    color: white;
+    background-color: red;
+
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+ }
+
+ .checkbox-input-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+ }
+
+ .selection-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+ }
+ 
+
+ .selection-container > p{
+    font-size: 1rem;
+    color: black;
+
+    padding: 0;
+    margin: 0;
+    margin-left: 15px;
+ }

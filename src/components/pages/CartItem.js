@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import '../../css/CartItem.css'
 import CartItemCard from '../CartItemCard.js'
+import ButtonPannal from '../global/ButtonPannal';
 
 const CartItem = (props) => {
 

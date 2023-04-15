@@ -2,6 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import '../../css/Navbar.css';
 import { UserAvatar, Menu, ShoppingCart, Email } from '@carbon/icons-react'
 import CartItem from '../pages/CartItem';
+import ModalBase from './ModalBase';
 
 const NavbarHeader = (props) => {
 
@@ -12,6 +13,9 @@ const NavbarHeader = (props) => {
 
     const [showCartItem, setShowCartItem] = useState(false);
     const [showHamItem, setShowHamItem] = useState(false);
+
+    const [isShowModal, setIsShowModal] = useState(false);
+    const [modalData, setModalData] = useState({ "title": "modalTitle", "message": "modal message", "isShowImg": true, "showImageType": "none" });
 
     useEffect(() => {
 
@@ -43,6 +47,17 @@ const NavbarHeader = (props) => {
         setShowHamItem(!status)
     }
 
+    const openItemCart = () =>{
+
+        if(props.cartItemCount < 1){
+            setModalData({ "title": "Cart Items", "message": "Cart is empty.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true)
+            return;
+        }
+
+        setShowCartItem(true)
+    }
+
 
     return (
         <div className='header-navbar-container'>
@@ -63,7 +78,7 @@ const NavbarHeader = (props) => {
                     <a className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }} >Sign Up</a>
                     <p id='username' onClick={UsernameToggle} >{props.username}</p>
                     <div className='shopping-cart-container'>
-                        <ShoppingCart id='shopping-cart' size="32" className='shoping-cart' onMouseDown={() => setShowCartItem(true)} />
+                        <ShoppingCart id='shopping-cart' size="32" className='shoping-cart' onMouseDown={openItemCart} />
                         <div className='counting-container' style={{ display: userCartItemCount <= 0 ? 'none' : 'flex' }}>{userCartItemCount}</div>
                     </div>
                     <div className='shopping-cart-container'>
@@ -90,6 +105,7 @@ const NavbarHeader = (props) => {
                 </div>
             </div>
             {showCartItem && <CartItem setShowCartItem={setShowCartItem} updateCartItem={props.updateCartItem} />}
+            {isShowModal && <ModalBase closeModal={() => setIsShowModal(false)} data={modalData} />}
         </div>
 
     );

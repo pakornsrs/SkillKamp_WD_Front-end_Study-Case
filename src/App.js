@@ -8,6 +8,7 @@ import Footer from './components/global/Footer.js';
 import SingInOut from './components/pages/SingInOut.js';
 import Shopping from './components/pages/Shopping.js';
 import PlaceOrder from './components/pages/PlaceOrder.js';
+import SignUp from './components/SignUp.js';
 import axios from 'axios';
 import service from './config/service_path.json'
 
@@ -87,6 +88,7 @@ function App() {
           <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
           <Route path='/contact' element={<Contact />} />
           <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem}/>} />
+          <Route path='/sign-up' element={<SignUp/>} />
           <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
           <Route path='/order'element={<PlaceOrder/>} />
         </Routes>

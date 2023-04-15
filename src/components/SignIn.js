@@ -36,18 +36,12 @@ const SignIn = (props) => {
         if ((username == null || username.trim().length === 0)) {
             setModalData({ "title": "Signin Validate Error", "message": "Please enter your username.", "isShowImg": true, "showImageType": "error" })
             setIsShowModal(true)
-
-            console.log("val username")
-
             return;
         }
 
         if ((password == null || password.trim().length === 0)) {
             setModalData({ "title": "Signin Validate Error", "message": "Please enter your password.", "isShowImg": true, "showImageType": "error" })
             setIsShowModal(true)
-
-            console.log("val password")
-
             return;
         }
 

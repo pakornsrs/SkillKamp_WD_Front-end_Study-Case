@@ -356,6 +356,11 @@ ul.detail-color li{
 
 }
 
+.color-header-container{
+    display: flex;
+    flex-direction: row;
+}
+
 
 
 

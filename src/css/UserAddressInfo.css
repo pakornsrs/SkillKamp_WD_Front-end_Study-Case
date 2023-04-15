@@ -1,0 +1,14 @@
+.input-container {
+    width: 100%;
+ }
+
+ #input-label{
+    color: black;
+    font-size: bold;
+
+    width: 100%;
+    text-align: left;
+
+    font-size: 1rem;
+    font-weight: bold;
+}

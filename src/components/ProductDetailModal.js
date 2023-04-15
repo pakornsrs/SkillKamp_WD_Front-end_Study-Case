@@ -8,7 +8,7 @@ import ModalBase from './global/ModalBase';
 const ProductDetailModal = (props) => {
 
     const [imgPaht, setImgPhat] = useState(props.prodDefultDetail.defaultImgPaht);
-    const [selectColor, setSelectColor] = useState({ "colorId": 0, "colorDesc": "Please select." })
+    const [selectColor, setSelectColor] = useState({ "colorId": 0, "colorDesc": "Please select." , "colorCode" : ""})
     const [isSelectColor, setIsSelectColor] = useState(false)
     const [selectSize, setSelectSize] = useState({ "sizeId": 0, "sizeDesc": "Please select." })
     const [isSelectSize, setIsSelectSize] = useState(false)
@@ -58,7 +58,7 @@ const ProductDetailModal = (props) => {
     const onSelectColor = (selectedColor) => {
 
         setIsSelectColor(true)
-        setSelectColor({ "colorId": selectedColor.colorId, "colorDesc": selectedColor.colorDescEn })
+        setSelectColor({ "colorId": selectedColor.colorId, "colorDesc": selectedColor.colorDescEn, "colorCode" : selectedColor.colorCode})
 
         let productNewColor = props.prodDetail.sepcificDetail.find(obj => obj.colorId === selectedColor.colorId)
         setImgPhat(productNewColor.imgPath)
@@ -74,11 +74,11 @@ const ProductDetailModal = (props) => {
 
     const onQuantityChange = (event) => {
 
-        if(event.target.value == "" || event.target.value == null || event.target.value == undefined){
+        if (event.target.value == "" || event.target.value == null || event.target.value == undefined) {
             setTotalPrice(0)
             return;
         }
-        
+
         let qty = parseInt(event.target.value);
 
 
@@ -91,7 +91,7 @@ const ProductDetailModal = (props) => {
             return;
         }
 
-        if(finalSelectProduct.quantity < qty){
+        if (finalSelectProduct.quantity < qty) {
 
             setModalData({ "title": "Numeric error", "message": "No enough supply stock, please contact our call center 02-000-0000.", "isShowImg": true, "showImageType": "alert" })
             setIsShowModal(true)
@@ -177,7 +177,7 @@ const ProductDetailModal = (props) => {
                 "productId": finalSelectProduct.productId,
                 "productDetail": finalSelectProduct.productDetailId,
                 "quantity": quantity,
-                "price" : totalPrice
+                "price": totalPrice
 
             })
 
@@ -191,7 +191,7 @@ const ProductDetailModal = (props) => {
 
                 axios.post(path, body, config).then(((res) => {
 
-                    if(!res.data.isError){
+                    if (!res.data.isError) {
                         getItemCartCount()
                         onClosingDialog();
 
@@ -214,35 +214,35 @@ const ProductDetailModal = (props) => {
         }
     }
 
-    
-  const getItemCartCount = () => {
-        
-    let userId = localStorage.getItem("userId");
 
-    let path = service.BasePath + service.GetCartCount;
-    let body = "";
+    const getItemCartCount = () => {
 
-    body = JSON.stringify({
-    "userId": userId,
-    })
+        let userId = localStorage.getItem("userId");
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json"
+        let path = service.BasePath + service.GetCartCount;
+        let body = "";
+
+        body = JSON.stringify({
+            "userId": userId,
+        })
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        try {
+            axios.post(path, body, config).then(((res) => {
+                if (!res.data.isError) {
+                    props.setCartItem(res.data.item)
+                }
+            }));
+        }
+        catch {
+
         }
     }
-
-    try{
-        axios.post(path, body, config).then(((res) => {
-            if(!res.data.isError){
-                props.setCartItem(res.data.item)
-            }
-        }));
-    }
-    catch{
-
-    }
-}
 
     return (
         <div className='product-detail-modal-container'>
@@ -266,10 +266,6 @@ const ProductDetailModal = (props) => {
                                         :
                                         <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
                                 ))
-                                // [...Array(Math.floor(props.prodDefultDetail.rating))].map((_, index) => (
-
-                                //     <li key={index}><StarFilled className="single-star checked" size="24"></StarFilled></li>
-                                // ))
                             }
                             {
                                 props.prodDefultDetail.rating % 1 > 0.5 ? <li><StarHalf className="single-star checked" size="24"></StarHalf></li> : null
@@ -285,7 +281,10 @@ const ProductDetailModal = (props) => {
                         <p id='product-name'>{props.prodDefultDetail.productNameEn}</p>
                         <div className='color-detail-container'>
 
-                            <p id='picker-title'>Select Colors</p>
+                            <div className='color-header-container'>
+                                <p id='picker-title'>Select Colors : </p>
+                                <p id='picker-title' style={{color: selectColor.colorDesc != "White" && selectColor.colorCode}}>{" " + selectColor.colorDesc}</p>
+                            </div>
 
                             <div className="prod-detail-color-container">
                                 {

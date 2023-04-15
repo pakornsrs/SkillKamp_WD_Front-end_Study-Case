@@ -54,19 +54,15 @@ const ProdCard = (props) => {
                         <h6>{data.value.priceStart + "฿"}</h6>
                         <ul className="star">
                             {
-                                // [...Array(Math.floor(data.value.reviewCount == 0 ? 5 : data.value.rating))].map((_, index) => (
-                                //     data.value.reviewCount == 0 ?
-                                //         <li key={index}><Star className="fa fa-star checked" size="24"></Star></li>
-                                //         :
-                                //         <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
-                                // ))
-                                [...Array(Math.floor(data.value.rating))].map((_, index) => (
-
-                                    <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
+                                [...Array(Math.floor(data.value.reviewCount == 0 ? 5 : data.value.rating))].map((_, index) => (
+                                    data.value.reviewCount == 0 ?
+                                        <li key={index}><Star className="fa fa-star checked" size="24"></Star></li>
+                                        :
+                                        <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
                                 ))
                             }
                             {
-                                data.value.rating % 1 > 0.5 ? <li><StarHalf className="fa fa-star checked" size="24"></StarHalf></li> : null
+                                data.value.rating % 1 >= 0.5 ? <li><StarHalf className="fa fa-star checked" size="24"></StarHalf></li> : null
                             }
 
                         </ul>
