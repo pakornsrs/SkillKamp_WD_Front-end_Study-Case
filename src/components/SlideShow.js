@@ -7,7 +7,7 @@ import Banner3 from '../Assets/Banner/Banner3.png'
 
 const SlideShow = () =>{
 
-    const imgs = new Array(Banner1,Banner2,Banner3,Banner1,Banner2);
+    const imgs = new Array(Banner1,Banner2,Banner3);
     const [imageUrl, setImageUrl] = useState(imgs[0]);
     const [activeButtons, setActiveButtons] = useState(0);
     const [activeSlides, activeActiveSlides] = useState(0);

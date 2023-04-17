@@ -9,7 +9,7 @@ import ProductDetailModal from '../ProductDetailModal';
 const Shopping = (props) => {
 
     const [searchKey, setSearchKey] = useState("");
-    const [productArray, setProductArray] = useState(null);
+    // const [productArray, setProductArray] = useState(null);
 
     const [showProduct, setShowProduct] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState(null);

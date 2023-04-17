@@ -1,10 +1,9 @@
-import React, { component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SlideShow from '../SlideShow.js'
 import '../../css/Home.css'
 import NewArrivalProds from '../NewArrivalProds.js'
 import axios from 'axios'
 import service from '../../config/service_path.json'
-import ModalBase from '../global/ModalBase.js'
 import LoadingScreen from '../global/LoadingScreen.js'
 import ProductDetailModal from '../ProductDetailModal.js'
 

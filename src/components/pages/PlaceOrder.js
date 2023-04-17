@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../css/PlaceOrder.css'
 import axios from 'axios';
@@ -21,7 +21,7 @@ const PlaceOrder = () => {
     const [selectPaymentTypeText, setSelectPaymentTypeText] = useState("Select payment method.")
 
     const [creditCardArray, setCreditCardArray] = useState(null);
-    const [selectCardId, setSelectCardId] = useState(null);
+    const [selectCardId, setSelectCardId] = useState(0);
     const [selectCardIdText, setSelectCardIdText] = useState("Select your card");
 
     const [userAddress, setUserAddress] = useState(null)

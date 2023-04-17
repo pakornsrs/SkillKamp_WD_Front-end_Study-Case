@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../css/ReviewModel.css'
-import { Star, StarFilled, ThumbsUpFilled, ThumbsDownFilled} from '@carbon/icons-react'
+import { Star, StarFilled} from '@carbon/icons-react'
 import axios from 'axios'
 import service from '../config/service_path.json'
 import ButtonPannal from './global/ButtonPannal';

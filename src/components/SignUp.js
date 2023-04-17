@@ -9,7 +9,7 @@ import ButtonPannal from './global/ButtonPannal';
 import UserAddressInfo from './UserAddressInfo';
 import UserCardInfo from './pages/UserCardInfo';
 import OneButton from './global/OneButton';
-import { Phone, TrashCan } from '@carbon/icons-react'
+import {TrashCan } from '@carbon/icons-react'
 
 const SignUp = (props) => {
 

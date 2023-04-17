@@ -46,8 +46,9 @@ a{
 }
 
 #username:hover{
+    color: #3c5fff;
     cursor: pointer;
-    color: orange;
+    transform: translate(0px,-2px);
 }
 
 #shopping-cart{
@@ -55,8 +56,9 @@ a{
 }
 
 #shopping-cart:hover{
+    color: #3c5fff;
     cursor: pointer;
-    color: orange;
+    transform: translate(0px,-2px);
 }
 
 #e-mail{
@@ -64,8 +66,9 @@ a{
 }
 
 #e-mail:hover{
+    color: #3c5fff;
     cursor: pointer;
-    color: orange;
+    transform: translate(0px,-2px);
 }
 
 .signin-container{
@@ -75,7 +78,9 @@ a{
 }
 
 a:hover{
-    color: orange;
+    color: #3c5fff;
+    cursor: pointer;
+    transform: translate(0px,-2px);
 }
 
 
@@ -101,7 +106,9 @@ header{
 }
 
 #main-menu:hover{
-    color: orange;
+    color: #3c5fff;
+    cursor: pointer;
+    transform: translate(0px,-2px);
 }
 
 .navbar .links{
@@ -156,7 +163,7 @@ header{
 .coupon-counting-container{
     width: 24px;
     height: 24px;
-    background-color: #27bd27;
+    background-color: rgb(28, 190, 64);
     border-radius: 50%;
 
     color: white;
@@ -234,7 +241,6 @@ header{
     width: 100%;
 
     text-align: center;
-    width: 100%;
 
     display: flex;
     justify-content: center;
@@ -244,6 +250,14 @@ header{
 
     color: white;
     font-weight: bold;
+
+    border-radius: 10px;
+
+    transition: 0.2s;
+}
+
+#link-ham:hover{
+    background-color: rgba(200, 200, 200,0.3);
 }
 
 #coupon-ham{
@@ -264,6 +278,8 @@ header{
 
 
     border-radius: 10px;
+
+    transition: 0.2s;
 }
 
 #coupon-ham:hover{

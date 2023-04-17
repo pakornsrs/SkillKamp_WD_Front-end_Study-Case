@@ -84,7 +84,7 @@
     align-items: center;
 
     height: 80px;
-    width:98%;
+    width:94%;
 
     margin-top: 8%;
     position: absolute;
@@ -205,7 +205,8 @@
 
 #cart-btn-place-order:hover{
 
-    background-color: orange;
+    background-color: #36468d;
+    cursor: pointer;
 }
 
 #cart-btn-cancel{
@@ -223,7 +224,8 @@
 
 #cart-btn-cancel:hover{
 
-    background-color: orange;
+    background-color: rgb(50, 50, 50);
+    cursor: pointer;
 }
 
 

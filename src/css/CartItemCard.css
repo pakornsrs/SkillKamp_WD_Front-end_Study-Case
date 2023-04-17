@@ -107,6 +107,7 @@
 #button-quantity:hover{
 
     background-color: rgb(100, 100, 100);
+    cursor: pointer;
 
 }
 
@@ -124,6 +125,8 @@
     border-radius: 5px ;
 
     display: block;
+
+    transition: 0.4s;
 }
 
 #button-add-review{
@@ -174,6 +177,7 @@
 #button-delete:hover{
 
     background-color: rgb(148, 0, 0);
+    cursor: pointer;
 
 }
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/ProdCardMini.css';
-import testImg from '../Assets/Product/Product1_3.png'
 import axios from 'axios'
 import service from '../config/service_path.json'
 import { Star, StarFilled, StarHalf } from '@carbon/icons-react'
@@ -69,14 +68,10 @@ const ProdCardMini = (props) => {
                                         :
                                         <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
                                 ))
-                                // [...Array(Math.floor(data.value.rating))].map((_, index) => (
-
-                                //     <li key={index}><StarFilled className="fa fa-star checked" size="24"></StarFilled></li>
-                                // ))
                             }
-                            {/* {
+                            {
                                 data.value.rating % 1 > 0.5 ? <li><StarHalf className="fa fa-star checked" size="24"></StarHalf></li> : null
-                            } */}
+                            }
 
                         </ul>
                         <p id='review-count'>{"(Reviewers :" + data.value.reviewCount + ")"}</p>

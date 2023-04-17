@@ -1,4 +1,4 @@
-import React, {component} from 'react'
+import React from 'react'
 import ContactUs from '../ContactUs';
 import ContactForm from '../ContactForm';
 import '../../css/Contact.css'

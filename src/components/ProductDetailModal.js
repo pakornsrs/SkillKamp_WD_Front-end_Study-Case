@@ -107,6 +107,64 @@ const ProductDetailModal = (props) => {
         setTotalPrice(price)
     }
 
+    const onClickAdd = () => {
+        if(isSelectColor && isSelectSize){
+            let temp = quantity;
+
+            let result = validateQty(temp+1)
+            if(!result) return;
+
+            setQuantity(temp+1)
+            
+            let price = finalSelectProduct.price * (temp+1)
+            setTotalPrice(price)
+        }
+    }
+
+    const onClickRemove = () => {
+        if(isSelectColor && isSelectSize){
+            let temp = quantity;
+
+            let result = validateQty(temp-1)
+            if(!result) return;
+
+            setQuantity(temp-1)
+
+            let price = finalSelectProduct.price * (temp-1)
+            setTotalPrice(price)
+        }
+    }
+
+    const validateQty = (qty) => {
+
+        if (qty == "" || qty == null || qty == undefined) {
+            setTotalPrice(0)
+            setQuantity(0)
+            return false;
+        }
+
+        if (qty <= 0) {
+            setModalData({ "title": "Numeric error", "message": "Amount of item must more than zero.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true)
+
+            setQuantity(0)
+
+            return false;
+        }
+
+        if (finalSelectProduct.quantity < qty) {
+
+            setModalData({ "title": "Numeric error", "message": "No enough supply stock, please contact our call center 02-000-0000.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true)
+
+            setQuantity(finalSelectProduct.quantity)
+
+            return false;
+        }
+
+        return true;
+    }
+
     const onClosingDialog = () => {
 
         // removel all value
@@ -310,7 +368,7 @@ const ProductDetailModal = (props) => {
                                     {
                                         props.prodDetail != null &&
                                         props.prodDetail.detailBySize.map((data) => (
-                                            <div key={data.sizeId} onMouseDown={() => onSelectSize(data)}>
+                                            <div id='size-selection-choise-contain' key={data.sizeId} onMouseDown={() => onSelectSize(data)}>
                                                 <p id='size-selection-choise'>{data.sizeDescEn}</p>
                                             </div>
                                         ))
@@ -328,7 +386,12 @@ const ProductDetailModal = (props) => {
                                     </div>
                                     <div className='sub-container'>
                                         <p>Order</p>
-                                        <input type='number' id='qty-input' onChange={onQuantityChange} disabled={!isSelectColor || !isSelectSize} ></input>
+                                        {/* <input type='number' id='qty-input' onChange={onQuantityChange} disabled={!isSelectColor || !isSelectSize} ></input> */}
+                                        <div className='prod-quatity-contaainer'>
+                                            <button id='button-quantity' onClick={() => onClickRemove()} style={{borderRadius:'10px 0 0 10px'}}>-</button>
+                                            <input type='number' id='input-quantity' onChange={onQuantityChange} disabled={true} value={quantity} ></input>
+                                            <button id='button-quantity' onClick={() => onClickAdd()} style={{borderRadius:'0 10px 10px 0'}}>+</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import '../css/ProdCard.css';
-import testImg from '../Assets/Product/Product1_3.png'
 import axios from 'axios'
 import service from '../config/service_path.json'
 import { Star, StarFilled, StarHalf } from '@carbon/icons-react'
