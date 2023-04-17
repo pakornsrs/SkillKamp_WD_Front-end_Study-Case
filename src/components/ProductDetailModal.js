@@ -8,7 +8,7 @@ import ModalBase from './global/ModalBase';
 const ProductDetailModal = (props) => {
 
     const [imgPaht, setImgPhat] = useState(props.prodDefultDetail.defaultImgPaht);
-    const [selectColor, setSelectColor] = useState({ "colorId": 0, "colorDesc": "Please select." , "colorCode" : ""})
+    const [selectColor, setSelectColor] = useState({ "colorId": 0, "colorDesc": "Please select.", "colorCode": "" })
     const [isSelectColor, setIsSelectColor] = useState(false)
     const [selectSize, setSelectSize] = useState({ "sizeId": 0, "sizeDesc": "Please select." })
     const [isSelectSize, setIsSelectSize] = useState(false)
@@ -58,7 +58,7 @@ const ProductDetailModal = (props) => {
     const onSelectColor = (selectedColor) => {
 
         setIsSelectColor(true)
-        setSelectColor({ "colorId": selectedColor.colorId, "colorDesc": selectedColor.colorDescEn, "colorCode" : selectedColor.colorCode})
+        setSelectColor({ "colorId": selectedColor.colorId, "colorDesc": selectedColor.colorDescEn, "colorCode": selectedColor.colorCode })
 
         let productNewColor = props.prodDetail.sepcificDetail.find(obj => obj.colorId === selectedColor.colorId)
         setImgPhat(productNewColor.imgPath)
@@ -218,29 +218,30 @@ const ProductDetailModal = (props) => {
     const getItemCartCount = () => {
 
         let userId = localStorage.getItem("userId");
+        if (userId != null) {
+            let path = service.BasePath + service.GetCartCount;
+            let body = "";
 
-        let path = service.BasePath + service.GetCartCount;
-        let body = "";
+            body = JSON.stringify({
+                "userId": userId,
+            })
 
-        body = JSON.stringify({
-            "userId": userId,
-        })
-
-        const config = {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-
-        try {
-            axios.post(path, body, config).then(((res) => {
-                if (!res.data.isError) {
-                    props.setCartItem(res.data.item)
+            const config = {
+                headers: {
+                    "Content-Type": "application/json"
                 }
-            }));
-        }
-        catch {
+            }
 
+            try {
+                axios.post(path, body, config).then(((res) => {
+                    if (!res.data.isError) {
+                        props.setCartItem(res.data.item)
+                    }
+                }));
+            }
+            catch {
+
+            }
         }
     }
 
@@ -283,7 +284,7 @@ const ProductDetailModal = (props) => {
 
                             <div className='color-header-container'>
                                 <p id='picker-title'>Select Colors : </p>
-                                <p id='picker-title' style={{color: selectColor.colorDesc != "White" && selectColor.colorCode}}>{" " + selectColor.colorDesc}</p>
+                                <p id='picker-title' style={{ color: selectColor.colorDesc != "White" && selectColor.colorCode }}>{" " + selectColor.colorDesc}</p>
                             </div>
 
                             <div className="prod-detail-color-container">

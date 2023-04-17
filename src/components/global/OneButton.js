@@ -1,4 +1,4 @@
-import React, { constant } from 'react';
+import React from 'react';
 import '../../css/OneButton.css'
 
 const OneButton = (props) => {

@@ -15,8 +15,12 @@
     "GetAllProductColor" : "/api/product/color/list",
     "GetAllProductSize" : "/api/product/size/list",
     "PlaceOrder" : "/api/order/create",
+    "ConfirmOrder" : "/api/order/purchase",
     "GetPaymentCard" : "/api/card/get",
     "GetAddress": "/api/address/get",
-    "ApplyCoupon": "/api/coupon/apply"
+    "ApplyCoupon": "/api/coupon/apply",
+    "GetPurchastHistory" : "/api/order/history/detail",
+    "CreateReview" : "/api/product/review/create",
+    "GetUserCoupon" : "/api/coupon/get"
 
 }

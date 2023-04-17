@@ -4,8 +4,6 @@ import '../../css/PlaceOrder.css'
 import axios from 'axios';
 import service from '../../config/service_path.json'
 import CartItemCard from '../CartItemCard';
-import { Tag } from '@carbon/icons-react'
-import SlideShow from '../SlideShow';
 import ModalBase from '../global/ModalBase';
 
 
@@ -29,6 +27,7 @@ const PlaceOrder = () => {
     const [userAddress, setUserAddress] = useState(null)
     const [selectAddressId, setSelectAddressId] = useState(null);
     const [selectAddressText, setSelectAddressText] = useState("Select your address");
+    const [otherAddress, setOtherAddress] = useState("");
 
     const [couponCode, setCouponCode] = useState("");
     const [isCouponCodeActive, setIsCouponCodeActive] = useState(false);
@@ -37,7 +36,11 @@ const PlaceOrder = () => {
     const [modalData, setModalData] = useState({ "title": "modalTitle", "message": "modal message", "isShowImg": true, "showImageType": "none" });
 
     useEffect(() => {
+        loadPage();
 
+    }, [])
+
+    const loadPage =()=>{
         let userId = localStorage.getItem("userId")
 
         if (userId != null) {
@@ -57,7 +60,7 @@ const PlaceOrder = () => {
 
             axios.post(path, body, config).then(((res) => {
                 if (!res.data.isError) {
-
+                    console.log("get here", res.data.item)
                     setOrderDetail(res.data.item);
                     setFullAmount(res.data.item.totalAmount)
                 }
@@ -79,8 +82,7 @@ const PlaceOrder = () => {
                 }
             }));
         }
-
-    }, [])
+    }
 
     useEffect(() => {
 
@@ -148,6 +150,7 @@ const PlaceOrder = () => {
     const selectAddress = (data) => {
 
         if (data != "Other") {
+            console.log(data)
             setSelectAddressId(data.id)
             setSelectAddressText(data.addressLine1 + ", " + data.province)
         }
@@ -223,6 +226,71 @@ const PlaceOrder = () => {
         }
     }
 
+    const otherAddressHandle = (event) =>{
+        setOtherAddress(event.target.value)
+    }
+
+    const confirmOrder = () => {
+        
+        let path = service.BasePath + service.ConfirmOrder;
+        let body = ""
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+
+        if(selectPaymentType == null || selectPaymentType == 0){
+            setModalData({ "title": "Confirm order warning", "message": "Pleas select payment method", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
+
+            return;
+        }
+
+        if(selectPaymentType == 2 && (selectCardId == null || selectCardId == 0)){
+            setModalData({ "title": "Confirm order warning", "message": "Please select credit/debit card", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
+
+            return;
+        }
+
+        if(selectAddressId == null ){
+            setModalData({ "title": "Apply Coupon", "message": "Please select delivery address.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
+
+            return;
+        }
+        console.log("Detail", otherAddress)
+
+        if(selectAddressId == 0 && otherAddress.trim().length == 0){
+
+            setModalData({ "title": "Apply Coupon", "message": "Please enter delivery address detail.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
+
+            return;
+        }
+
+        body = JSON.stringify({
+            "userId": localStorage.getItem("userId"),
+            "orderId": orderDetail.id,
+            "paymentType": selectPaymentType,
+            "cardId": selectCardId,
+            "addressId" : selectAddressId,
+            "addressDetail" : otherAddress
+          });
+
+        axios.post(path, body, config).then(res => {
+            if(!res.data.isError){
+                // Reload page if success go home
+                loadPage();
+            }
+            else{
+
+            }
+        });
+    }
+
     return (
         <React.Fragment>
             <div className='main-place-order-page'>
@@ -251,7 +319,7 @@ const PlaceOrder = () => {
                             </div>
                         </div>
                         <div className='order-item-card-container' onMouseOver={disableScrollBar} onMouseLeave={enableScrollBar}>
-                            <CartItemCard setCartItem={null} updateCartItem={null} enableEdit={false} />
+                            <CartItemCard setCartItem={null} updateCartItem={null} mode={"summary"} />
                         </div>
                     </div>
 
@@ -318,11 +386,11 @@ const PlaceOrder = () => {
                                     <p id='drop-down-choise' onClick={() => selectAddress("Other")}>Other</p>
                                 </div>
                             </div>
-                            <textarea type="text" id='other-address' style={{ display: selectAddressText == "Other" ? 'block' : 'none' }} />
+                            <textarea type="text" id='other-address' style={{ display: selectAddressText == "Other" ? 'block' : 'none' }}  onChange={otherAddressHandle}/>
                         </div>
 
                         <div className='button-container'>
-                            <button id='order-button-ok'>Confirm</button>
+                            <button id='order-button-ok' onClick={() => confirmOrder()}>Confirm</button>
                             <div className='button-container-sub'>
                                 <button id='order-button'>Cancel Order</button>
                                 <button id='order-button'>Back</button>

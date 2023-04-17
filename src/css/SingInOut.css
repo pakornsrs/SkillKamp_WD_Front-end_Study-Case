@@ -99,3 +99,14 @@
     font-weight: bold;
     font-size: 1rem;
 }
+
+#sign-up-line{
+    color: blue;
+    text-decoration: underline;
+
+    transition: 0.3s;
+}
+
+#sign-up-line:hover{
+    color: rgb(103, 0, 163);
+}

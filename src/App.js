@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
 import Navbar from './components/global/NavbarHeader.js';
 import Home from './components/pages/Home.js';
 import Contact from './components/pages/Contact.js';
@@ -11,9 +10,7 @@ import PlaceOrder from './components/pages/PlaceOrder.js';
 import SignUp from './components/SignUp.js';
 import axios from 'axios';
 import service from './config/service_path.json'
-
 import './css/App.css';
-import { Rotate } from '@carbon/icons-react';
 
 function App() {
 
@@ -24,17 +21,25 @@ function App() {
   const [cartItemCount, setCartItemCount] = useState(0);
   const [confirmPlaceOrder, setConfirmPlaceOrder] = useState(null)
 
+  const [couponItem, setCouponItem] = useState([]);
+
   useEffect(() => {
+
+    let userId = localStorage.getItem("userId");
+
     if (userId != null) {
       updateCartItem();
+      // updateCouponItem();
     }
   }, []);
 
 
   const updateCartItem = () =>{
+    
     let userId = localStorage.getItem("userId");
 
-      let path = service.BasePath + service.GetCartCount;
+      if(userId != null){
+        let path = service.BasePath + service.GetCartCount;
       let body = "";
 
       body = JSON.stringify({
@@ -55,8 +60,34 @@ function App() {
       catch {
 
       }
+      }
   }
 
+  const updateCouponItem = () =>{
+    let userId = localStorage.getItem("userId");
+
+      let path = service.BasePath + service.GetUserCoupon;
+      let body = "";
+
+      body = JSON.stringify({
+        "userId": userId,
+      })
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+
+      try {
+          axios.post(path, body, config).then(((res) => {
+            setCouponItem(res.data.item)
+        }));
+      }
+      catch {
+
+      }
+  }
   useEffect(() => {
     let userId = localStorage.getItem("userId");
     let webToken = localStorage.getItem("webToken");
@@ -76,18 +107,19 @@ function App() {
 
     setUsername(null)
     setCartItemCount(0)
+    setCouponItem([])
 
   }
 
   return (
     <div>
-      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem}/>
+      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem} couponItem = {couponItem} updateCouponItem={updateCouponItem}/>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
-          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
+          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount}  updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem} />}/>
+          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem}/>} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem}/>} />
+          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem}/>} />
           <Route path='/sign-up' element={<SignUp/>} />
           <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
           <Route path='/order'element={<PlaceOrder/>} />

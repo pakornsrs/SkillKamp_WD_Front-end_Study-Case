@@ -16,6 +16,14 @@ const Home = (props) => {
     const [showProduct, setShowProduct] = useState(false);
 
     useEffect(() => {
+        let userId = localStorage.getItem("userId")
+        if (userId != null) {
+            props.updateCartItem();
+            props.updateCouponItem();
+        }
+    }, []);
+
+    useEffect(() => {
 
         if (selectedProduct != null) {
 
@@ -39,10 +47,10 @@ const Home = (props) => {
 
                     console.log("res", res.data.item)
                     setProductFullDetail(res.data.item);
-                    
+
                 }));
             }
-            catch{
+            catch {
 
             }
 
@@ -70,7 +78,7 @@ const Home = (props) => {
                             </div>
                             <NewArrivalProds selectedProduct={setSelectedProduct} />
                         </React.Fragment>
-                        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail = {selectedProduct} setCartItem = {props.setCartItem}/>}
+                        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} />}
                     </React.Fragment>
             }
         </React.Fragment>

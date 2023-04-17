@@ -86,6 +86,7 @@ const SignIn = (props) => {
             setIsShowModal(true)
 
             props.updateCartItem()
+            // props.updateCouponItem()
 
             goHomeSignSuccess();
         }
@@ -118,7 +119,7 @@ const SignIn = (props) => {
 
                 <div className='no-account'>
                     <a>Don't have an account ? &nbsp;</a>
-                    <a>Signup now</a>
+                    <a href='/sign-up' id='sign-up-line'>Signup now</a>
                 </div>
 
             </div>
