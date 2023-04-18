@@ -17,7 +17,8 @@ const ProdCardMini = (props) => {
 
         const config = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + localStorage.getItem("webToken")
             }
         }
 
@@ -28,6 +29,12 @@ const ProdCardMini = (props) => {
 
         axios.post(path,body, config).then(res => {
             setNewArrivalProd(res.data.item)
+        }).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
         });
 
     }, [props.keyword]);

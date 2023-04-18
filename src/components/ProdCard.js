@@ -13,12 +13,18 @@ const ProdCard = (props) => {
 
         const config = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + localStorage.getItem("webToken")
             }
         }
-
         axios.get(path, config).then(res => {
             setNewArrivalProd(res.data.item)
+        }).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
         });
     }, []);
 

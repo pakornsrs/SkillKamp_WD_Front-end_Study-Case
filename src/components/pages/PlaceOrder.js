@@ -7,7 +7,7 @@ import CartItemCard from '../CartItemCard';
 import ModalBase from '../global/ModalBase';
 
 
-const PlaceOrder = () => {
+const PlaceOrder = (props) => {
 
     const navigate = useNavigate();
 
@@ -16,6 +16,8 @@ const PlaceOrder = () => {
     const [fullAmount, setFullAmount] = useState(0)
     const [discountPercent, setDiscountPercent] = useState(0)
     const [discountAmount, setDiscountAmount] = useState(0)
+    const [deliverAmount, setDeliverAmount] = useState(100)
+    const [totalAmount, setTotalAmount] = useState(fullAmount + deliverAmount)
 
     const [selectPaymentType, setSelectPaymentType] = useState(0)
     const [selectPaymentTypeText, setSelectPaymentTypeText] = useState("Select payment method.")
@@ -40,7 +42,21 @@ const PlaceOrder = () => {
 
     }, [])
 
-    const loadPage =()=>{
+    useEffect(() => {
+
+        setTotalAmount(fullAmount + deliverAmount - discountAmount)
+
+    }, [fullAmount, isCouponCodeActive])
+
+    useEffect(() => {
+
+        if (discountPercent > 0) {
+            setIsCouponCodeActive(true)
+        }
+
+    }, [discountPercent])
+
+    const loadPage = () => {
         let userId = localStorage.getItem("userId")
 
         if (userId != null) {
@@ -50,7 +66,8 @@ const PlaceOrder = () => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -67,7 +84,13 @@ const PlaceOrder = () => {
                 else {
                     navigate('/home');
                 }
-            }));
+            })).catch((res) => {
+
+                if (res.response.status == 401) {
+                    props.handlerUnauthorized();
+                }
+
+            });
 
             axios.post(path2, body, config).then(((res) => {
                 if (!res.data.isError) {
@@ -80,9 +103,19 @@ const PlaceOrder = () => {
                 else {
                     navigate('/home');
                 }
-            }));
+            })).catch((res) => {
+
+                if (res.response.status == 401) {
+                    props.handlerUnauthorized();
+                }
+
+            });
         }
     }
+
+    useEffect(() => {
+
+    }, [discountAmount])
 
     useEffect(() => {
 
@@ -94,7 +127,8 @@ const PlaceOrder = () => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -117,7 +151,13 @@ const PlaceOrder = () => {
                     console.log(res)
                     // navigate('/home');
                 }
-            }));
+            })).catch((res) => {
+
+                if (res.response.status == 401) {
+                    props.handlerUnauthorized();
+                }
+
+            });
         }
     }, [selectPaymentType])
 
@@ -161,7 +201,8 @@ const PlaceOrder = () => {
     }
 
     const handleCouponChange = (event) => {
-        console.log(event.target.value)
+        console.log("set Zero")
+
         setCouponCode(event.target.value);
 
         setDiscountPercent(0)
@@ -179,7 +220,8 @@ const PlaceOrder = () => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -189,7 +231,7 @@ const PlaceOrder = () => {
                 "couponCode": couponCode
             })
 
-            if(couponCode == null || couponCode.trim().length == 0){
+            if (couponCode == null || couponCode.trim().length == 0) {
                 setModalData({ "title": "Apply Coupon", "message": "Please enter coupon code", "isShowImg": true, "showImageType": "alert" })
                 setIsShowModal(true);
 
@@ -199,16 +241,14 @@ const PlaceOrder = () => {
             axios.post(path, body, config).then(((res) => {
                 if (!res.data.isError) {
 
-                    console.log("here")
-
                     setDiscountPercent(res.data.item.percentDiscount)
 
                     let discount = fullAmount * (res.data.item.percentDiscount / 100)
                     setDiscountAmount(discount)
-                    
-                    if(discountPercent>0){
-                        setIsCouponCodeActive(true)
-                    }
+
+                    // if(discountPercent>0){
+                    //     setIsCouponCodeActive(true)
+                    // }
 
                     setModalData({ "title": "Apply Coupon", "message": res.data.errorMessage, "isShowImg": true, "showImageType": "alert" })
                     setIsShowModal(true)
@@ -222,73 +262,96 @@ const PlaceOrder = () => {
 
                     return;
                 }
-            }));
+            })).catch((res) => {
+
+                if (res.response.status == 401) {
+                    props.handlerUnauthorized();
+                }
+
+            });
+        }
+        else {
+            setModalData({ "title": "User is not login", "message": "Please login.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
         }
     }
 
-    const otherAddressHandle = (event) =>{
+    const otherAddressHandle = (event) => {
         setOtherAddress(event.target.value)
     }
 
     const confirmOrder = () => {
-        
-        let path = service.BasePath + service.ConfirmOrder;
-        let body = ""
 
-        const config = {
-            headers: {
-                "Content-Type": "application/json"
+        if (localStorage.getItem("userId" != null)) {
+            let path = service.BasePath + service.ConfirmOrder;
+            let body = ""
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
+                }
             }
-        }
 
-        if(selectPaymentType == null || selectPaymentType == 0){
-            setModalData({ "title": "Confirm order warning", "message": "Pleas select payment method", "isShowImg": true, "showImageType": "alert" })
-            setIsShowModal(true);
+            if (selectPaymentType == null || selectPaymentType == 0) {
+                setModalData({ "title": "Confirm order warning", "message": "Pleas select payment method", "isShowImg": true, "showImageType": "alert" })
+                setIsShowModal(true);
 
-            return;
-        }
-
-        if(selectPaymentType == 2 && (selectCardId == null || selectCardId == 0)){
-            setModalData({ "title": "Confirm order warning", "message": "Please select credit/debit card", "isShowImg": true, "showImageType": "alert" })
-            setIsShowModal(true);
-
-            return;
-        }
-
-        if(selectAddressId == null ){
-            setModalData({ "title": "Apply Coupon", "message": "Please select delivery address.", "isShowImg": true, "showImageType": "alert" })
-            setIsShowModal(true);
-
-            return;
-        }
-        console.log("Detail", otherAddress)
-
-        if(selectAddressId == 0 && otherAddress.trim().length == 0){
-
-            setModalData({ "title": "Apply Coupon", "message": "Please enter delivery address detail.", "isShowImg": true, "showImageType": "alert" })
-            setIsShowModal(true);
-
-            return;
-        }
-
-        body = JSON.stringify({
-            "userId": localStorage.getItem("userId"),
-            "orderId": orderDetail.id,
-            "paymentType": selectPaymentType,
-            "cardId": selectCardId,
-            "addressId" : selectAddressId,
-            "addressDetail" : otherAddress
-          });
-
-        axios.post(path, body, config).then(res => {
-            if(!res.data.isError){
-                // Reload page if success go home
-                loadPage();
+                return;
             }
-            else{
 
+            if (selectPaymentType == 2 && (selectCardId == null || selectCardId == 0)) {
+                setModalData({ "title": "Confirm order warning", "message": "Please select credit/debit card", "isShowImg": true, "showImageType": "alert" })
+                setIsShowModal(true);
+
+                return;
             }
-        });
+
+            if (selectAddressId == null) {
+                setModalData({ "title": "Apply Coupon", "message": "Please select delivery address.", "isShowImg": true, "showImageType": "alert" })
+                setIsShowModal(true);
+
+                return;
+            }
+            console.log("Detail", otherAddress)
+
+            if (selectAddressId == 0 && otherAddress.trim().length == 0) {
+
+                setModalData({ "title": "Apply Coupon", "message": "Please enter delivery address detail.", "isShowImg": true, "showImageType": "alert" })
+                setIsShowModal(true);
+
+                return;
+            }
+
+            body = JSON.stringify({
+                "userId": localStorage.getItem("userId"),
+                "orderId": orderDetail.id,
+                "paymentType": selectPaymentType,
+                "cardId": selectCardId,
+                "addressId": selectAddressId,
+                "addressDetail": otherAddress
+            });
+
+            axios.post(path, body, config).then(res => {
+                if (!res.data.isError) {
+                    // Reload page if success go home
+                    loadPage();
+                }
+                else {
+
+                }
+            }).catch((res) => {
+
+                if (res.response.status == 401) {
+                    props.handlerUnauthorized();
+                }
+
+            });
+        }
+        else {
+            setModalData({ "title": "User is not login", "message": "Please login.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
+        }
     }
 
     return (
@@ -319,7 +382,7 @@ const PlaceOrder = () => {
                             </div>
                         </div>
                         <div className='order-item-card-container' onMouseOver={disableScrollBar} onMouseLeave={enableScrollBar}>
-                            <CartItemCard setCartItem={null} updateCartItem={null} mode={"summary"} />
+                            <CartItemCard setCartItem={null} updateCartItem={null} mode={"summary"} handlerUnauthorized={props.handlerUnauthorized} />
                         </div>
                     </div>
 
@@ -327,7 +390,7 @@ const PlaceOrder = () => {
                         <p id='payment-summary-title'>Payment and Deliver</p>
                         <div className='price-summary-container'>
                             <div className='price-summary-container-line'>
-                                <p id='order-total-amount'>Total Amount:</p>
+                                <p id='order-total-amount'>Amount:</p>
                                 <p id='order-total-amount-full-amount'>{fullAmount} ฿</p>
                             </div>
                             <div className='price-summary-container-line' style={{ display: !isCouponCodeActive && 'none' }}>
@@ -336,11 +399,11 @@ const PlaceOrder = () => {
                             </div>
                             <div className='price-summary-container-line'>
                                 <p id='order-total-amount'>Delivery Fee:</p>
-                                <p id='order-total-amount-full-amount' >100 ฿</p>
+                                <p id='order-total-amount-full-amount' >{deliverAmount} ฿</p>
                             </div>
                             <div className='price-summary-container-line'>
                                 <p id='order-total-amount'>Total Amount:</p>
-                                <p id='order-total-amount-full-amount' style={{color: isCouponCodeActive && 'green'}} >{fullAmount - discountAmount + 100} ฿</p>
+                                <p id='order-total-amount-full-amount' style={{ color: isCouponCodeActive && 'green' }} >{totalAmount} ฿</p>
                             </div>
                         </div>
                         <div className='input-coupon-container'>
@@ -386,7 +449,7 @@ const PlaceOrder = () => {
                                     <p id='drop-down-choise' onClick={() => selectAddress("Other")}>Other</p>
                                 </div>
                             </div>
-                            <textarea type="text" id='other-address' style={{ display: selectAddressText == "Other" ? 'block' : 'none' }}  onChange={otherAddressHandle}/>
+                            <textarea type="text" id='other-address' style={{ display: selectAddressText == "Other" ? 'block' : 'none' }} onChange={otherAddressHandle} />
                         </div>
 
                         <div className='button-container'>

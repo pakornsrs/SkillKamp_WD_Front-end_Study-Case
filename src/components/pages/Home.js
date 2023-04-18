@@ -36,22 +36,23 @@ const Home = (props) => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
-            try {
+            axios.post(path, body, config).then(((res) => {
 
-                axios.post(path, body, config).then(((res) => {
+                console.log("res", res.data.item)
+                setProductFullDetail(res.data.item);
 
-                    console.log("res", res.data.item)
-                    setProductFullDetail(res.data.item);
+            })).catch((res) => {
 
-                }));
-            }
-            catch {
-
-            }
+                if(res.response.status == 401){
+                    props.handlerUnauthorized();
+                }
+    
+            });
 
             document.body.style.overflow = 'hidden';
             setShowProduct(true)
@@ -77,7 +78,7 @@ const Home = (props) => {
                             </div>
                             <NewArrivalProds selectedProduct={setSelectedProduct} />
                         </React.Fragment>
-                        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} />}
+                        {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} handlerUnauthorized = {props.handlerUnauthorized}/>}
                     </React.Fragment>
             }
         </React.Fragment>

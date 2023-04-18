@@ -176,7 +176,7 @@ const NavbarHeader = (props) => {
                     </div>
                 </div>
             </div>
-            {showCartItem && <CartItem setShowCartItem={setShowCartItem} updateCartItem={props.updateCartItem} mode={cartItemMode} />}
+            {showCartItem && <CartItem setShowCartItem={setShowCartItem} updateCartItem={props.updateCartItem} mode={cartItemMode} handlerUnauthorized = {props.handlerUnauthorized}/>}
             {isShowModal && <ModalBase closeModal={() => setIsShowModal(false)} data={modalData} />}
         </div>
 

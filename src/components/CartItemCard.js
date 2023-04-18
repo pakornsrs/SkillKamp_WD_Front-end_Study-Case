@@ -33,7 +33,8 @@ const CartItemCard = (props) => {
             let body = ""
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -49,6 +50,12 @@ const CartItemCard = (props) => {
                         props.setCartItem(res.data.item)
                     }
                 }
+            }).catch((res) => {
+
+                if(res.response.status == 401){
+                    props.handlerUnauthorized();
+                }
+
             });
         }
     }
@@ -62,7 +69,8 @@ const CartItemCard = (props) => {
             let body = ""
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -72,9 +80,14 @@ const CartItemCard = (props) => {
 
             axios.post(path, body, config).then(res => {
                 if (!res.data.isError) {
-                    console.log("mode review item", res.data.item)
                     setProductCartIrem(res.data.item)
                 }
+            }).catch((res) => {
+
+                if(res.response.status == 401){
+                    props.handlerUnauthorized();
+                }
+
             });
         }
     }
@@ -91,7 +104,8 @@ const CartItemCard = (props) => {
 
         const config = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + localStorage.getItem("webToken")
             }
         }
 
@@ -107,6 +121,12 @@ const CartItemCard = (props) => {
                 loadCartITem();
                 //setProductCartIrem([])
             }
+        }).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
         });
     }
 
@@ -117,7 +137,8 @@ const CartItemCard = (props) => {
 
         const config = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + localStorage.getItem("webToken")
             }
         }
 
@@ -134,6 +155,12 @@ const CartItemCard = (props) => {
                 loadCartITem();
                 // setProductCartIrem([])
             }
+        }).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
         });
     }
 
@@ -144,7 +171,8 @@ const CartItemCard = (props) => {
 
         const config = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + localStorage.getItem("webToken")
             }
         }
 
@@ -161,6 +189,12 @@ const CartItemCard = (props) => {
                 loadCartITem();
                 // setProductCartIrem([])
             }
+        }).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
         });
     }
 

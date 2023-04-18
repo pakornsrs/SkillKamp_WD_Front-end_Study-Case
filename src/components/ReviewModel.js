@@ -108,7 +108,8 @@ const ReviewModel = (props) => {
             let body = ""
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -134,6 +135,12 @@ const ReviewModel = (props) => {
                     setModalData({ "title": "Service Error", "message": res.data.errorMessage, "isShowImg": true, "showImageType": "error" })
                     setIsShowModal(true)
                 }
+            }).catch((res) => {
+
+                if(res.response.status == 401){
+                    props.handlerUnauthorized();
+                }
+    
             });
     }
 

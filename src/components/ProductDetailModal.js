@@ -241,7 +241,8 @@ const ProductDetailModal = (props) => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -259,7 +260,13 @@ const ProductDetailModal = (props) => {
                     setModalData({ "title": "Error", "message": "System error.", "isShowImg": true, "showImageType": "error" })
                     setIsShowModal(true)
 
-                }));
+                })).catch((res) => {
+
+                    if(res.response.status == 401){
+                        props.handlerUnauthorized();
+                    }
+
+                });
 
             }
             catch {
@@ -286,20 +293,22 @@ const ProductDetailModal = (props) => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
-            try {
-                axios.post(path, body, config).then(((res) => {
-                    if (!res.data.isError) {
-                        props.setCartItem(res.data.item)
-                    }
-                }));
-            }
-            catch {
+            axios.post(path, body, config).then(((res) => {
+                if (!res.data.isError) {
+                    props.setCartItem(res.data.item)
+                }
+            })).catch((res) => {
 
-            }
+                if(res.response.status == 401){
+                    props.handlerUnauthorized();
+                }
+    
+            });
         }
     }
 

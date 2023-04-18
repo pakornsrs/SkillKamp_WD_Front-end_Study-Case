@@ -64,7 +64,7 @@ const CartItem = (props) => {
                     </div>
                 </div>
                 <div className='cart-item-card-container'>
-                    <CartItemCard setCartItem={setCartItem} updateCartItem={props.updateCartItem} mode={props.mode} />
+                    <CartItemCard setCartItem={setCartItem} updateCartItem={props.updateCartItem} mode={props.mode} handlerUnauthorized = {props.handlerUnauthorized}/>
                 </div>
                 <div className='cart-item-total-container' style={{display: props.mode != "displayCart" && 'none'}}>
                     <p id='total-amount'>Total Price : </p>

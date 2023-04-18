@@ -27,7 +27,8 @@ const Shopping = (props) => {
 
         const config = {
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + localStorage.getItem("webToken")
             }
         }
 
@@ -39,7 +40,13 @@ const Shopping = (props) => {
                 });
                 setProductCategory(myArray);
             }
-        }));
+        })).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
+        });
 
         axios.get(pathSize, config).then(((res) => {
             if (!res.data.isError) {
@@ -48,7 +55,13 @@ const Shopping = (props) => {
                 });
                 setProductSize(myArray);
             }
-        }));
+        })).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
+        });
 
         axios.get(pathColor, config).then(((res) => {
             if (!res.data.isError) {
@@ -57,7 +70,13 @@ const Shopping = (props) => {
                 });
                 setProductColor(myArray);
             }
-        }));
+        })).catch((res) => {
+
+            if(res.response.status == 401){
+                props.handlerUnauthorized();
+            }
+
+        });
     }, [])
 
     useEffect(() => {
@@ -74,22 +93,23 @@ const Shopping = (props) => {
 
             const config = {
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
-            try {
+            axios.post(path, body, config).then(((res) => {
 
-                axios.post(path, body, config).then(((res) => {
+                console.log("res", res.data.item)
+                setProductFullDetail(res.data.item);
 
-                    console.log("res", res.data.item)
-                    setProductFullDetail(res.data.item);
+            })).catch((res) => {
 
-                }));
-            }
-            catch {
-
-            }
+                if(res.response.status == 401){
+                    props.handlerUnauthorized();
+                }
+    
+            });
 
             document.body.style.overflow = 'hidden';
             setShowProduct(true)
@@ -151,12 +171,12 @@ const Shopping = (props) => {
                     </div>
 
                     <div className='product-card-container'>
-                        <ProdCardMini setSelectedProduct={setSelectedProduct} keyword={searchKey} />
+                        <ProdCardMini setSelectedProduct={setSelectedProduct} keyword={searchKey} handlerUnauthorized = {props.handlerUnauthorized}/>
                     </div>
 
                 </div>
             </div>
-            {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} />}
+            {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} handlerUnauthorized = {props.handlerUnauthorized}/>}
         </React.Fragment>
     )
 }

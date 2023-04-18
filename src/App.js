@@ -9,6 +9,7 @@ import Shopping from './components/pages/Shopping.js';
 import PlaceOrder from './components/pages/PlaceOrder.js';
 import SignUp from './components/SignUp.js';
 import axios from 'axios';
+import ModalBase from './components/global/ModalBase.js';
 import service from './config/service_path.json'
 import './css/App.css';
 
@@ -22,6 +23,9 @@ function App() {
   const [confirmPlaceOrder, setConfirmPlaceOrder] = useState(null)
 
   const [couponItem, setCouponItem] = useState([]);
+
+  const [isShowModal, setIsShowModal] = useState(false);
+    const [modalData, setModalData] = useState({ "title": "modalTitle", "message": "modal message", "isShowImg": true, "showImageType": "none" });
 
   useEffect(() => {
 
@@ -48,9 +52,10 @@ function App() {
 
       const config = {
         headers: {
-          "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization" : "Bearer " + localStorage.getItem("webToken")
         }
-      }
+    }
 
       try {
           axios.post(path, body, config).then(((res) => {
@@ -75,9 +80,10 @@ function App() {
 
       const config = {
         headers: {
-          "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization" : "Bearer " + localStorage.getItem("webToken")
         }
-      }
+    }
 
       try {
           axios.post(path, body, config).then(((res) => {
@@ -111,21 +117,40 @@ function App() {
 
   }
 
+  const displayModalBase =(title,message,type)=>{
+
+    setModalData({ "title": title, "message": message, "isShowImg": true, "showImageType": type })
+    setIsShowModal(true)
+  }
+
+  const handlerUnauthorized = () =>{
+    
+    if(localStorage.getItem("webToken") != null){
+      userSignOut();
+      displayModalBase("Token Expire","User token is expirem please login again.","alert");
+    }
+    else{
+      displayModalBase("Unauthorized","Request is unalthorized please login.","error");
+    }
+
+  }
+
   return (
     <div>
-      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem} couponItem = {couponItem} updateCouponItem={updateCouponItem}/>
+      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem} couponItem = {couponItem} updateCouponItem={updateCouponItem} handlerUnauthorized = {handlerUnauthorized}/>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount}  updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem} />}/>
-          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem}/>} />
+          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount}  updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem} handlerUnauthorized = {handlerUnauthorized}/>}/>
+          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem} handlerUnauthorized = {handlerUnauthorized}/>} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem}/>} />
+          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem}/>} handlerUnauthorized = {handlerUnauthorized}/>
           <Route path='/sign-up' element={<SignUp/>} />
-          <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} />} />
+          <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} handlerUnauthorized = {handlerUnauthorized}/>} />
           <Route path='/order'element={<PlaceOrder/>} />
         </Routes>
       </BrowserRouter>
       <Footer />
+      {isShowModal && <ModalBase closeModal={() => setIsShowModal(false)} data={modalData} />}
     </div>
   );
 }
