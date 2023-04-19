@@ -18,23 +18,18 @@ const ModalBase = (props) => {
 
       switch (props.data.showImageType) {
         case "alert":
-          console.log("alert")
           setImgPath(AlertImg)
           break;
         case "info":
-          console.log("info")
           setImgPath(InfoImg)
           break;
         case "correct":
-          console.log("correct")
           setImgPath(CorrectImg)
           break;
         case "error":
-          console.log("error")
           setImgPath(ErrorImg)
           break;
         default:
-          console.log("none")
           setImgPath("")
 
       }

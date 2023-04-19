@@ -57,7 +57,6 @@ function App() {
       }
 
       axios.get(path, config).then(((res) => {
-        console.log("Token expire", res.data.item)
         setCartItemCount(res.data.item)
       })).catch((res) => {
 

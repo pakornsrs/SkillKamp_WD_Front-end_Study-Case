@@ -124,8 +124,6 @@ const ReviewModel = (props) => {
                 "isRecommend": isRecommend
               })
 
-              console.log(body)
-
             axios.post(path, body, config).then(res => {
                 if (!res.data.isError) {
                     props.loadCartITemHistory();

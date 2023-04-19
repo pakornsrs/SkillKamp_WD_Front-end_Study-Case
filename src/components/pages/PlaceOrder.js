@@ -77,7 +77,6 @@ const PlaceOrder = (props) => {
 
             axios.post(path, body, config).then(((res) => {
                 if (!res.data.isError) {
-                    console.log("get here", res.data.item)
                     setOrderDetail(res.data.item);
                     setFullAmount(res.data.item.totalAmount)
                 }
@@ -148,7 +147,6 @@ const PlaceOrder = (props) => {
                 }
                 else {
 
-                    console.log(res)
                     // navigate('/home');
                 }
             })).catch((res) => {
@@ -190,7 +188,6 @@ const PlaceOrder = (props) => {
     const selectAddress = (data) => {
 
         if (data != "Other") {
-            console.log(data)
             setSelectAddressId(data.id)
             setSelectAddressText(data.addressLine1 + ", " + data.province)
         }
@@ -201,7 +198,6 @@ const PlaceOrder = (props) => {
     }
 
     const handleCouponChange = (event) => {
-        console.log("set Zero")
 
         setCouponCode(event.target.value);
 
@@ -314,7 +310,6 @@ const PlaceOrder = (props) => {
 
                 return;
             }
-            console.log("Detail", otherAddress)
 
             if (selectAddressId == 0 && otherAddress.trim().length == 0) {
 

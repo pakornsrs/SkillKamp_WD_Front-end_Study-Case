@@ -44,7 +44,6 @@ const Home = (props) => {
 
             axios.post(path, body, config).then(((res) => {
 
-                console.log("res", res.data.item)
                 setProductFullDetail(res.data.item);
 
             })).catch((res) => {

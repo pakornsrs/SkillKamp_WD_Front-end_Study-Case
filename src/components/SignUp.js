@@ -217,7 +217,6 @@ const SignUp = (props) => {
     const addAddress = () => {
 
         if (userAddress1.trim().length <= 0) {
-            console.log(userAddress1.trim().length)
             setModalData({ "title": "Add address warning", "message": "Please enter address at least 1 line.", "isShowImg": true, "showImageType": "alert" })
             setIsShowModal(true)
             return;
@@ -275,7 +274,6 @@ const SignUp = (props) => {
         let current = new Date();
 
         if (userCardNumber.trim().length !== 16) {
-            console.log(userAddress1.trim().length)
             setModalData({ "title": "Add Card Warning", "message": "Card number must contain 16 digits", "isShowImg": true, "showImageType": "alert" })
             setIsShowModal(true)
             return;
@@ -315,8 +313,6 @@ const SignUp = (props) => {
             setNameOnCard("")
             setCardExpireDate("")
             setCVV("")
-
-            console.log(userCardList)
         }
     }
 

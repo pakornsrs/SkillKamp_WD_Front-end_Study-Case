@@ -113,8 +113,6 @@ const CartItemCard = (props) => {
             "cartItemId": item.cartItemId
         })
 
-        console.log(body)
-
         axios.post(path, body, config).then(res => {
             if (!res.data.tsError) {
                 props.updateCartItem();
@@ -147,8 +145,6 @@ const CartItemCard = (props) => {
             "quantiry": 1
         })
 
-        console.log(body)
-
         axios.post(path, body, config).then(res => {
             if (!res.data.tsError) {
                 props.updateCartItem();
@@ -180,8 +176,6 @@ const CartItemCard = (props) => {
             "cartItemId": item.cartItemId,
             "quantiry": 1
         })
-
-        console.log(body)
 
         axios.post(path, body, config).then(res => {
             if (!res.data.tsError) {

@@ -15,8 +15,6 @@ const ProdCardMini = (props) => {
         let path = service.BasePath + service.SearchProduct;
         let body = "";
 
-        console.log("cate", props.colorFilter)
-
         const config = {
             headers: {
                 "Content-Type": "application/json",
