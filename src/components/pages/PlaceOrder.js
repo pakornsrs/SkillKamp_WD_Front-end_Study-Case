@@ -280,9 +280,10 @@ const PlaceOrder = (props) => {
         setOtherAddress(event.target.value)
     }
 
+
     const confirmOrder = () => {
 
-        if (localStorage.getItem("userId" != null)) {
+        if (localStorage.getItem("userId") != null ) {
             let path = service.BasePath + service.ConfirmOrder;
             let body = ""
 
@@ -330,6 +331,44 @@ const PlaceOrder = (props) => {
                 "cardId": selectCardId,
                 "addressId": selectAddressId,
                 "addressDetail": otherAddress
+            });
+
+            axios.post(path, body, config).then(res => {
+                if (!res.data.isError) {
+                    // Reload page if success go home
+                    loadPage();
+                }
+                else {
+
+                }
+            }).catch((res) => {
+
+                if (res.response.status == 401) {
+                    props.handlerUnauthorized();
+                }
+
+            });
+        }
+        else {
+            setModalData({ "title": "User is not login", "message": "Please login.", "isShowImg": true, "showImageType": "alert" })
+            setIsShowModal(true);
+        }
+    }
+
+    const cancelOrder = () =>{
+        if (localStorage.getItem("userId") != null ) {
+            let path = service.BasePath + service.CancelOrder;
+            let body = ""
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
+                }
+            }
+
+            body = JSON.stringify({
+                "orderId": orderDetail.id,
             });
 
             axios.post(path, body, config).then(res => {
@@ -455,7 +494,7 @@ const PlaceOrder = (props) => {
                         <div className='button-container'>
                             <button id='order-button-ok' onClick={() => confirmOrder()}>Confirm</button>
                             <div className='button-container-sub'>
-                                <button id='order-button'>Cancel Order</button>
+                                <button id='order-button' onClick={() => cancelOrder()}>Cancel Order</button>
                                 <button id='order-button'>Back</button>
                             </div>
                         </div>

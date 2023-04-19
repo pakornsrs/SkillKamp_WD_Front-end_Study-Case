@@ -15,6 +15,8 @@ const ProdCardMini = (props) => {
         let path = service.BasePath + service.SearchProduct;
         let body = "";
 
+        console.log("cate", props.colorFilter)
+
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -28,7 +30,28 @@ const ProdCardMini = (props) => {
         })
 
         axios.post(path,body, config).then(res => {
-            setNewArrivalProd(res.data.item)
+
+            var allProd = res.data.item;
+            if(props.categoryFilter != null){
+                allProd = allProd.filter(obj => obj.categoryId == props.categoryFilter)
+            }
+
+            if(props.colorFilter != null){
+                let temp = [];
+                for(let i = 0; i < allProd.length ; i++){
+                    let item = allProd[i];
+                    for(let j = 0; j < item.sepcificDetail.length; j++){
+                                            
+                        if(item.sepcificDetail[j].colorId == props.colorFilter){
+                            temp.push(item);
+                        }
+                    }
+                }
+
+                allProd = temp;
+            }
+
+            setNewArrivalProd(allProd)
         }).catch((res) => {
 
             if(res.response.status == 401){
@@ -37,7 +60,7 @@ const ProdCardMini = (props) => {
 
         });
 
-    }, [props.keyword]);
+    }, [props.keyword,props.categoryFilter, props.colorFilter]);
 
     const products = newArrivalProd;
     const myArray = Object.keys(products).map(key => {
@@ -83,7 +106,10 @@ const ProdCardMini = (props) => {
                         </ul>
                         <p id='review-count'>{"(Reviewers :" + data.value.reviewCount + ")"}</p>
                         <div className="buy-button-container">
-                            <button className="buy-now">Buy Now</button>
+                            <button className="buy-now" onClick={() => addToCart(data.value)
+                            
+                            
+                            } >Buy Now</button>
                             <button className="buy-add-cart" onClick={() => addToCart(data.value)}>Add</button>
                         </div>
                     </div>

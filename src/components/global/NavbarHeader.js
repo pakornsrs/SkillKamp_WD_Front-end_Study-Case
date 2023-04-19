@@ -126,7 +126,7 @@ const NavbarHeader = (props) => {
                     <UserAvatar style={{ margin: '10px' }} size="32" />
                     <a href="/sign-in" className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }}>Sign In</a>
                     <a href="#" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }}> / </a>
-                    <a className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }} >Sign Up</a>
+                    <a href='/sign-up' className="action-btn" style={{ display: props.username == null || props.username == undefined ? 'flex' : 'none' }} >Sign Up</a>
                     <p id='username' onClick={UsernameToggle} >{props.username}</p>
                     <div className='shopping-cart-container'>
                         <ShoppingCart id='shopping-cart' size="32" className='shoping-cart' onMouseDown={() => openItemCart("displayCart")} />

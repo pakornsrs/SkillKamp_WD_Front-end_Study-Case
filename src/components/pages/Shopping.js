@@ -19,6 +19,11 @@ const Shopping = (props) => {
     const [productSize, setProductSize] = useState(null);
     const [productCategory, setProductCategory] = useState(null);
 
+    const [categoryFilter,setCategoryFilter] = useState(null);
+    const [colorFilter,setColorFilter] = useState(null);
+    const [categoryFilterText,setCategoryFilterText] = useState("All Categories");
+    const [colorFilterText,setColorFilterText] = useState("All Colors");
+
     useEffect(() => {
 
         let pathCategory = service.BasePath + service.GetAllCategory;
@@ -145,12 +150,12 @@ const Shopping = (props) => {
 
                         <div className="dropdown">
                             <p id='filter-title'>Category of Product</p>
-                            <button className="dropbtn">All Categories</button>
+                            <button className="dropbtn">{categoryFilterText}</button>
                             <div className="dropdown-content">
-                                <p>All Categories</p>
+                                <p onClick={() => (setCategoryFilter(null),setCategoryFilterText("All Categories"))}>All Categories</p>
                                 {
                                     productCategory != null && productCategory.map((data) => (
-                                        <p key={data.key}>{data.value.nameEn}</p>
+                                        <p key={data.key} onClick={() => (setCategoryFilter(data.value.id), setCategoryFilterText(data.value.nameEn))}>{data.value.nameEn}</p>
                                     ))
                                 }
                             </div>
@@ -158,12 +163,12 @@ const Shopping = (props) => {
 
                         <div className="dropdown">
                             <p id='filter-title'>Color of Product</p>
-                            <button className="dropbtn">All Colors</button>
+                            <button className="dropbtn">{colorFilterText}</button>
                             <div className="dropdown-content">
-                                <p>All Colors</p>
+                                <p onClick={() => (setColorFilter(null),setColorFilterText("All Colors"))}>All Colors</p>
                                 {
                                     productColor != null && productColor.map((data) => (
-                                        <p key={data.key}>{data.value.colorNameEn}</p>
+                                        <p key={data.key} onClick={() => (setColorFilter(data.value.id), setColorFilterText(data.value.colorNameEn))}>{data.value.colorNameEn}</p>
                                     ))
                                 }
                             </div>
@@ -171,7 +176,7 @@ const Shopping = (props) => {
                     </div>
 
                     <div className='product-card-container'>
-                        <ProdCardMini setSelectedProduct={setSelectedProduct} keyword={searchKey} handlerUnauthorized = {props.handlerUnauthorized}/>
+                        <ProdCardMini setSelectedProduct={setSelectedProduct} keyword={searchKey} categoryFilter={categoryFilter} colorFilter={colorFilter} handlerUnauthorized = {props.handlerUnauthorized}/>
                     </div>
 
                 </div>

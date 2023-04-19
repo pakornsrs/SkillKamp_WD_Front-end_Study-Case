@@ -73,7 +73,7 @@ const ProdCard = (props) => {
                         </ul>
                         <p id='review-count'>{"(Reviewers :" + data.value.reviewCount + ")"}</p>
                         <div className="buy-button-container">
-                            <button className="buy-now">Buy Now</button>
+                            <button className="buy-now" onClick={() => addToCart(data.value)}>Buy Now</button>
                             <button className="buy-add-cart" onClick={()=>addToCart(data.value)}>Add to Cart</button>
                         </div>
                     </div>

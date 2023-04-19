@@ -13,6 +13,7 @@ const Home = (props) => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [productFullDetail, setProductFullDetail] = useState(null);
     const [showProduct, setShowProduct] = useState(false);
+    
 
     useEffect(() => {
         let userId = localStorage.getItem("userId")
@@ -76,7 +77,7 @@ const Home = (props) => {
                             <div>
                                 <SlideShow />
                             </div>
-                            <NewArrivalProds selectedProduct={setSelectedProduct} />
+                            <NewArrivalProds selectedProduct={setSelectedProduct}/>
                         </React.Fragment>
                         {showProduct && <ProductDetailModal closeProductModal={closeProductModal} prodDetail={productFullDetail} prodDefultDetail={selectedProduct} setCartItem={props.setCartItem} handlerUnauthorized = {props.handlerUnauthorized}/>}
                     </React.Fragment>

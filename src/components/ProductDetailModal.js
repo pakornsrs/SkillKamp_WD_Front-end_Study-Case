@@ -108,29 +108,29 @@ const ProductDetailModal = (props) => {
     }
 
     const onClickAdd = () => {
-        if(isSelectColor && isSelectSize){
+        if (isSelectColor && isSelectSize) {
             let temp = quantity;
 
-            let result = validateQty(temp+1)
-            if(!result) return;
+            let result = validateQty(temp + 1)
+            if (!result) return;
 
-            setQuantity(temp+1)
-            
-            let price = finalSelectProduct.price * (temp+1)
+            setQuantity(temp + 1)
+
+            let price = finalSelectProduct.price * (temp + 1)
             setTotalPrice(price)
         }
     }
 
     const onClickRemove = () => {
-        if(isSelectColor && isSelectSize){
+        if (isSelectColor && isSelectSize) {
             let temp = quantity;
 
-            let result = validateQty(temp-1)
-            if(!result) return;
+            let result = validateQty(temp - 1)
+            if (!result) return;
 
-            setQuantity(temp-1)
+            setQuantity(temp - 1)
 
-            let price = finalSelectProduct.price * (temp-1)
+            let price = finalSelectProduct.price * (temp - 1)
             setTotalPrice(price)
         }
     }
@@ -242,7 +242,7 @@ const ProductDetailModal = (props) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -262,7 +262,7 @@ const ProductDetailModal = (props) => {
 
                 })).catch((res) => {
 
-                    if(res.response.status == 401){
+                    if (res.response.status == 401) {
                         props.handlerUnauthorized();
                     }
 
@@ -294,7 +294,7 @@ const ProductDetailModal = (props) => {
             const config = {
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization" : "Bearer " + localStorage.getItem("webToken")
+                    "Authorization": "Bearer " + localStorage.getItem("webToken")
                 }
             }
 
@@ -304,10 +304,10 @@ const ProductDetailModal = (props) => {
                 }
             })).catch((res) => {
 
-                if(res.response.status == 401){
+                if (res.response.status == 401) {
                     props.handlerUnauthorized();
                 }
-    
+
             });
         }
     }
@@ -397,9 +397,9 @@ const ProductDetailModal = (props) => {
                                         <p>Order</p>
                                         {/* <input type='number' id='qty-input' onChange={onQuantityChange} disabled={!isSelectColor || !isSelectSize} ></input> */}
                                         <div className='prod-quatity-contaainer'>
-                                            <button id='button-quantity' onClick={() => onClickRemove()} style={{borderRadius:'10px 0 0 10px'}}>-</button>
+                                            <button id='button-quantity' onClick={() => onClickRemove()} style={{ borderRadius: '10px 0 0 10px' }}>-</button>
                                             <input type='number' id='input-quantity' onChange={onQuantityChange} disabled={true} value={quantity} ></input>
-                                            <button id='button-quantity' onClick={() => onClickAdd()} style={{borderRadius:'0 10px 10px 0'}}>+</button>
+                                            <button id='button-quantity' onClick={() => onClickAdd()} style={{ borderRadius: '0 10px 10px 0' }}>+</button>
                                         </div>
                                     </div>
                                 </div>
@@ -412,8 +412,8 @@ const ProductDetailModal = (props) => {
                 </div>
 
                 <div className='product-modal-button-container'>
-                    <button onMouseDown={addToCartService} id='prod-detail-modal'>OK</button>
-                    <button onMouseDown={onClosingDialog} id='prod-detail-modal-cancel'>CANCEL</button>
+                    <button onMouseDown={addToCartService} id='prod-detail-modal' style={{display: props.isBuyNow && 'none'}}>OK</button>
+                    <button onMouseDown={() => (onClosingDialog())} id='prod-detail-modal-cancel'>CANCEL</button>
                 </div>
             </div>
             {isShowModal && <ModalBase closeModal={() => setIsShowModal(false)} data={modalData} />}

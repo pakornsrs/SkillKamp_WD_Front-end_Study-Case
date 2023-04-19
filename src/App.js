@@ -25,53 +25,57 @@ function App() {
   const [couponItem, setCouponItem] = useState([]);
 
   const [isShowModal, setIsShowModal] = useState(false);
-    const [modalData, setModalData] = useState({ "title": "modalTitle", "message": "modal message", "isShowImg": true, "showImageType": "none" });
+  const [modalData, setModalData] = useState({ "title": "modalTitle", "message": "modal message", "isShowImg": true, "showImageType": "none" });
 
   useEffect(() => {
+
+    let webToken = localStorage.getItem("webToken");
+
+    if (webToken != null) {
+      tokenCheck()
+
+    }
 
     let userId = localStorage.getItem("userId");
 
     if (userId != null) {
       updateCartItem();
-      // updateCouponItem();
     }
   }, []);
 
-
-  const updateCartItem = () =>{
-    
+  const tokenCheck = () => {
     let userId = localStorage.getItem("userId");
 
-      if(userId != null){
-        let path = service.BasePath + service.GetCartCount;
-      let body = "";
-
-      body = JSON.stringify({
-        "userId": userId,
-      })
+    if (userId != null) {
+      let path = service.BasePath + service.TokenCheck;
 
       const config = {
         headers: {
-            "Content-Type": "application/json",
-            "Authorization" : "Bearer " + localStorage.getItem("webToken")
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("webToken")
         }
+      }
+
+      axios.get(path, config).then(((res) => {
+        console.log("Token expire", res.data.item)
+        setCartItemCount(res.data.item)
+      })).catch((res) => {
+
+        if (res.response.status == 401) {
+          userSignOut();
+        }
+
+      });
     }
-
-      try {
-          axios.post(path, body, config).then(((res) => {
-          setCartItemCount(res.data.item)
-        }));
-      }
-      catch {
-
-      }
-      }
   }
 
-  const updateCouponItem = () =>{
+
+  const updateCartItem = () => {
+
     let userId = localStorage.getItem("userId");
 
-      let path = service.BasePath + service.GetUserCoupon;
+    if (userId != null) {
+      let path = service.BasePath + service.GetCartCount;
       let body = "";
 
       body = JSON.stringify({
@@ -80,19 +84,49 @@ function App() {
 
       const config = {
         headers: {
-            "Content-Type": "application/json",
-            "Authorization" : "Bearer " + localStorage.getItem("webToken")
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("webToken")
         }
+      }
+
+      axios.post(path, body, config).then(((res) => {
+        setCartItemCount(res.data.item)
+      })).catch((res) => {
+
+        if (res.response.status == 401) {
+          userSignOut();
+        }
+
+      });
+    }
+  }
+
+  const updateCouponItem = () => {
+    let userId = localStorage.getItem("userId");
+
+    let path = service.BasePath + service.GetUserCoupon;
+    let body = "";
+
+    body = JSON.stringify({
+      "userId": userId,
+    })
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("webToken")
+      }
     }
 
-      try {
-          axios.post(path, body, config).then(((res) => {
-            setCouponItem(res.data.item)
-        }));
-      }
-      catch {
+    axios.post(path, body, config).then(((res) => {
+      setCouponItem(res.data.item)
+    })).catch((res) => {
 
+      if (res.response.status == 401) {
+        userSignOut();
       }
+
+    });
   }
   useEffect(() => {
     let userId = localStorage.getItem("userId");
@@ -117,36 +151,36 @@ function App() {
 
   }
 
-  const displayModalBase =(title,message,type)=>{
+  const displayModalBase = (title, message, type) => {
 
     setModalData({ "title": title, "message": message, "isShowImg": true, "showImageType": type })
     setIsShowModal(true)
   }
 
-  const handlerUnauthorized = () =>{
-    
-    if(localStorage.getItem("webToken") != null){
+  const handlerUnauthorized = () => {
+
+    if (localStorage.getItem("webToken") != null) {
       userSignOut();
-      displayModalBase("Token Expire","User token is expirem please login again.","alert");
+      displayModalBase("Token Expire", "User token is expirem please login again.", "alert");
     }
-    else{
-      displayModalBase("Unauthorized","Request is unalthorized please login.","error");
+    else {
+      displayModalBase("Unauthorized", "Request is unalthorized please login.", "error");
     }
 
   }
 
   return (
     <div>
-      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem ={updateCartItem} couponItem = {couponItem} updateCouponItem={updateCouponItem} handlerUnauthorized = {handlerUnauthorized}/>
+      <Navbar username={username} userSignOut={userSignOut} cartItemCount={cartItemCount} updateCartItem={updateCartItem} couponItem={couponItem} updateCouponItem={updateCouponItem} handlerUnauthorized={handlerUnauthorized} />
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount}  updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem} handlerUnauthorized = {handlerUnauthorized}/>}/>
-          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} updateCartItem ={updateCartItem} updateCouponItem = {updateCouponItem} handlerUnauthorized = {handlerUnauthorized}/>} />
+          <Route path='/' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem} handlerUnauthorized={handlerUnauthorized} />} />
+          <Route path='/home' element={<Home cartItemCount={cartItemCount} setCartItem={setCartItemCount} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem} handlerUnauthorized={handlerUnauthorized} />} />
           <Route path='/contact' element={<Contact />} />
-          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem}/>} handlerUnauthorized = {handlerUnauthorized}/>
-          <Route path='/sign-up' element={<SignUp/>} />
-          <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} handlerUnauthorized = {handlerUnauthorized}/>} />
-          <Route path='/order'element={<PlaceOrder/>} />
+          <Route path='/sign-in' element={<SingInOut setNewUSername={setUsername} updateCartItem={updateCartItem} updateCouponItem={updateCouponItem} />} handlerUnauthorized={handlerUnauthorized} />
+          <Route path='/sign-up' element={<SignUp />} />
+          <Route path='/shop' element={<Shopping cartItemCount={cartItemCount} setCartItem={setCartItemCount} handlerUnauthorized={handlerUnauthorized} />} />
+          <Route path='/order' element={<PlaceOrder handlerUnauthorized={handlerUnauthorized} />} />
         </Routes>
       </BrowserRouter>
       <Footer />

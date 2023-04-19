@@ -355,7 +355,7 @@ const SignUp = (props) => {
                 "password": password,
                 "firstNameTh": nameTh,
                 "lastNameTh": lastnameTh,
-                "firstNameEn": nameTh,
+                "firstNameEn": nameEn,
                 "lastNameEn": lastnameEn,
                 "birthDate": birthDateUnix,
                 "gender": gender,
@@ -471,7 +471,7 @@ const SignUp = (props) => {
                             userAddressList.length >= 1 && userAddressList.map((data) => (
                                 <div key={Math.floor(Math.random() * 1001)} className='added-data-container'>
                                     <div className='added-data-detail'>
-                                        <p>{data.addressLine1 + " " + data.addressLine2}</p>
+                                        <p>{data.addressLine1 + " " + data.addressLine2 + " " + data.subdistrict + " " + data.district + " " + data.province + " " + data.zipCode}</p>
                                     </div>
                                     <div className='added-data-button'>
                                         <button className='added-del-button' onClick={() => removeAddress(data)}>
